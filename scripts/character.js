@@ -38,6 +38,7 @@ Character.prototype.move = function(direction, dt) {
 	{
 		//this.anim.stop();
 	}
+	MapManager.collision(this);
 };
 
 Character.prototype.teleport = function(position) {

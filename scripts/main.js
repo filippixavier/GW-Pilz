@@ -6,7 +6,7 @@
     var player, t1, t2, dt;
 	function init () {
 		//AssetsManager.init()
-		player = new Character(1, 100, 100, "player");
+		player = new Character(1, 64, 64, "player");
 		MapManager.init();
 		renderingManager.init();
 		requestAnimationFrame(loadAssets);
