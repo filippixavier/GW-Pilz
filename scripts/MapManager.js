@@ -44,7 +44,16 @@ var MapManager = function ()
 		}
 	}
 
-	function loadMap(mapName)
+	function switchMap(door)
+	{
+		nextMap = door.target.name;
+		nextPositionX = door.target.x;
+		nextPositionY = door.target.y;
+		loadMap(nextMap,nextPositionX,nextPositionY);
+
+	}
+
+	function loadMap(mapName,x,y)
 	{
 		if(mapCollection.hasOwnProperty(mapName))
 		{
@@ -56,6 +65,8 @@ var MapManager = function ()
 		}
 
 		renderingManager.drawMap(map);
+		//player.x = x;
+		//player.y = y;
 	}
 
 	return {

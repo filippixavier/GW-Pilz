@@ -16,7 +16,7 @@
 	{
 		if(AssetsManager.checkDone())
 		{
-			MapManager.loadMap("bloc_operatoire");
+			MapManager.loadMap("bloc_operatoire",2,2);
 			console.log("done");
 			t1 = Date.now();
 			requestAnimationFrame(run);
