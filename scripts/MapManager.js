@@ -1,8 +1,5 @@
 var MapManager = function ()
 {
-	window.requestAnimationFrame = window.requestAnimationFrame || window.mozRequestAnimationFrame ||
-                              window.webkitRequestAnimationFrame || window.msRequestAnimationFrame;
-
 	var map = [];
 	var mapCollection = {};
 	var mapList;
