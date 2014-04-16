@@ -74,7 +74,7 @@ var MapManager = function ()
 			createMap(mapName);
 		}
 
-		renderingManager.drawMap(map);
+		renderingManager.drawMap(map, mapList[title].floor, mapList[title].wall);
 		//player.x = x;
 		//player.y = y;
 	}

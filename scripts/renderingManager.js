@@ -5,6 +5,8 @@ var renderingManager = function ()
      
 	var cameraCanvas , cameraCtx, mapCanvas, mapCtx, cameraX = 0 , cameraY = 0;
 
+	var floor, wall;
+
 	var assetsRendered = [];
 	
 	function init ()
@@ -22,8 +24,10 @@ var renderingManager = function ()
   		assetsRendered = [];
 	}
 
-	function drawMap (map)
+	function drawMap (map, floorname, wallname)
 	{
+		floor = AssetsManager.getImage(floorname);
+		wall = AssetsManager.getImage(wallname);
 		mapCtx.clearRect(0,0,mapCanvas.width,mapCanvas.height);
 		mapCtx.fillStyle = "#CCCCCC";
 
