@@ -3,6 +3,8 @@ var MapManager = function ()
 	var map = [];
 	var mapCollection = {};
 	var mapList;
+	var obstacles = [];
+	var title;
 
 	function init () {
 		mapList = maps;
@@ -11,6 +13,7 @@ var MapManager = function ()
 	function createMap(mapName)
 	{
 		map = [];
+		title = mapName;
 		var mapData = mapList[mapName];
 
 		if(typeof mapData === "undefined")
@@ -42,6 +45,13 @@ var MapManager = function ()
 		{
 			mapCollection[mapData.name] = map;
 		}
+
+		for ( var i in mapData.objects)
+		{
+			var obstacle = new Obstacle(mapData.objects[i]);
+			obstacles.push(obstacle);
+		}
+		console.log(obstacles);
 	}
 
 	function switchMap(door)
@@ -67,6 +77,18 @@ var MapManager = function ()
 		renderingManager.drawMap(map);
 		//player.x = x;
 		//player.y = y;
+	}
+	function collideDoor (objet)
+	{
+		for (var i in mapList[title].doors)
+		{	
+			// console.log(objet.x > (mapList[title].doors[i].x*100), objet.x < (mapList[title].doors[i].x*100)+100, objet.y > (mapList[title].doors[i].y*100), objet.y < (mapList[title].doors[i].y*100)+100);
+			if (objet.x > (mapList[title].doors[i].x*100) && objet.x < (mapList[title].doors[i].x*100)+50 && objet.y > (mapList[title].doors[i].y*100) && objet.y < (mapList[title].doors[i].y*100)+50)
+			{
+				console.log('toto');
+				switchMap(mapList[title].doors[i]);
+			}
+		}
 	}
 	function collision (objet)
 	{
@@ -138,6 +160,7 @@ var MapManager = function ()
 		init: init,
 		loadMap : loadMap,
 		collision : collision,
+		collideDoor : collideDoor,
 		get actualMap() {
 			return map;
 		}

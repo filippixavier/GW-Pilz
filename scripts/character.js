@@ -8,6 +8,9 @@ function Character(speed, height, width, type)
 	this.width = width;
 
 	this.anim = {};
+	// this.event = new EventListener();
+	// this.event.create("move");
+	// player.event.subscribe("move", clb);
 }
 
 Character.prototype.move = function(direction, dt) {
@@ -39,6 +42,8 @@ Character.prototype.move = function(direction, dt) {
 		//this.anim.stop();
 	}
 	MapManager.collision(this);
+	MapManager.collideDoor(this);
+	// this.event.emit("move");
 };
 
 Character.prototype.teleport = function(position) {
