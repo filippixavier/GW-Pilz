@@ -1,11 +1,11 @@
-function Animation(parent, spritesheetName, subAnimDatas, startAnim)
+function Animation(parent, spritesheetName, startAnim)
 {
 	this.parent = parent;
 	this.x = parent.x;
 	this.y = parent.y;
 
 	this.spritesheet = AssetsManager.getImage(spritesheetName);
-	this.subAnims = subAnimDatas;
+	this.subAnims = AssetsManager.getAnimData(spritesheetName);
 
 	this.dt = 0;
 	this.pause = false;
@@ -20,9 +20,14 @@ function Animation(parent, spritesheetName, subAnimDatas, startAnim)
 	this.reverse = this.subAnims[startAnim].reverse;
 	this.duration = this.subAnims[startAnim].duration;
 	this.numberOfFrames = this.subAnims[startAnim].numberOfFrames;
+
+	renderingManager.addToDynamicObjects(this);
+	this.stop();
 }
 
 Animation.prototype.start = function(subAnimName) {
+	if(subAnimName === undefined)
+		return;
 	this.pause = false;
 	this.spriteY = this.subAnims[subAnimName].line;
 	this.spriteX = 0;
@@ -36,7 +41,6 @@ Animation.prototype.stop = function() {
 	var durOneFrame = this.duration/this.numberOfFrames;
 	this.pause = true;
 	this.dt = durOneFrame;
-	console.log(this.dt);
 };
 
 Animation.prototype.update = function(dt) {
@@ -71,5 +75,8 @@ Animation.prototype.update = function(dt) {
 		
 	}
 	this.spriteX = ((this.dt/durOneFrame)|0) * this.width;
-	renderingManager.updateDisplayData(this);
+};
+
+Animation.prototype.delete = function() {
+	renderingManager.removeFromDynamicObjects(this);
 };
