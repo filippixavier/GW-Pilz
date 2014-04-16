@@ -1,0 +1,1 @@
+var assets = {"mainchar":{"source":"./assets/PERSO DEF.png","datas":{"up":{"loop":true,"reverse":true,"duration":1000,"numberOfFrames":3,"spriteWidth":64,"spriteHeight":64,"line":0}}}}

@@ -1,29 +1,27 @@
 var AssetsManager = function()
 {
-	var assets = {};
+	var imageList = {};
 	var imgNumber = 0, imgCount = 0;
 
 	function init()
 	{
-		var assetsList = JSON.parse(assets);
-
-		for(imgName in assetsList)
+		for(imgName in assets)
 		{
-			if(assetsList.hasOwnProperty(imgName))
+			if(assets.hasOwnProperty(imgName))
 			{
 				imgNumber++;
 			}
 		}
 
-		for(imgName in assetsList)
+		for(imgName in assets)
 		{
-			if(assetsList.hasOwnProperty(imgName))
+			if(assets.hasOwnProperty(imgName))
 			{
-				assets[imgName] = new Image();
-				assets[imgName] = assetsList[imgName];
-				assets[imgName].onload(function(){
+				imageList[imgName] = new Image();
+				imageList[imgName].src = assets[imgName].source;
+				imageList[imgName].onload = function(){
 					imgCount++;
-				});
+				};
 			}
 		}
 	}
@@ -39,12 +37,18 @@ var AssetsManager = function()
 
 	function getImage(name)
 	{
-		return assets[name];
+		return imageList[name];
+	}
+
+	function getAnimData(name)
+	{
+		return assets[name].datas;
 	}
 
 	return {
 		init: init,
 		checkDone: checkDone,
-		getImage: getImage
+		getImage: getImage,
+		getAnimData: getAnimData
 	}
 }();
