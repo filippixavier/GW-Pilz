@@ -9,6 +9,7 @@ var renderingManager = function ()
 				cameraCanvas = document.getElementById("canvas");
 				cameraCanvas.height = 720;
 				cameraCanvas.width = 1080;
+				console.log(cameraCanvas.width);
 				cameraCtx = document.getElementById("canvas").getContext("2d");
 
 				mapCanvas = document.createElement("canvas");
