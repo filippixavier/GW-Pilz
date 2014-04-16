@@ -12,7 +12,6 @@ var renderingManager = function ()
 		cameraCanvas = document.getElementById("canvas");
 		cameraCanvas.height = 720;
 		cameraCanvas.width = 1080;
-		console.log(cameraCanvas.width);
 		cameraCtx = document.getElementById("canvas").getContext("2d");
 
 		mapCanvas = document.createElement("canvas");
@@ -27,20 +26,6 @@ var renderingManager = function ()
 	{
 		mapCtx.clearRect(0,0,mapCanvas.width,mapCanvas.height);
 		mapCtx.fillStyle = "#CCCCCC";
-		// for (var i in game.rooms)
-		// {
-		// 	// console.log(game.mapCtx);
-		// 	if (game.perso.room == i)
-		// 	{
-
-		// 		game.mapCtx.fillRect(0,0,game.rooms[i].width,game.rooms[i].height);
-		// 		for (var j in game.rooms[i].doors)
-		// 		{
-		// 			game.mapCtx.fillStyle = "#f00";
-		// 			game.mapCtx.fillRect(game.rooms[i].doors[j].x, game.rooms[i].doors[j].y ,64,64);
-		// 		}
-		// 	}
-		// }
 
 		for (var line = map.length-1; line >=  0; line --)
 		{
