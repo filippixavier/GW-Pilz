@@ -7,7 +7,7 @@ var renderingManager = function ()
 
 	var floor, wall, door;
 
-	var assetsRendered = [], staticObjects = [];
+	var assetsRendered = [], staticObjects = []; walls = [];
 	
 	function init ()
 	{
@@ -28,6 +28,7 @@ var renderingManager = function ()
 
   		assetsRendered = [];
   		staticObjects = [];
+  		walls = [];
 	}
 
 	function drawMap (map, doorname, floorname, wallname)
@@ -35,6 +36,7 @@ var renderingManager = function ()
 		floor = AssetsManager.getImage(floorname);
 		wall = AssetsManager.getImage(wallname);
 		door = AssetsManager.getImage(doorname);
+		walls = [];
 		mapCtx.clearRect(0,0,mapCanvas.width,mapCanvas.height);
 		mapCtx.fillStyle = "#CCCCCC";
 
@@ -56,6 +58,22 @@ var renderingManager = function ()
 					mapCtx.fillStyle = "#f00";
 					mapCtx.fillRect(line*100,row*100,100,100);
 				}
+			}
+		}
+	}
+
+	function getWallsPosition (map) {
+		var previous = false;
+		for(var line = map[0].length-1; line >= 0; line --)
+		{
+			for(var row = map.length-1; length-1 >= 0; row--)
+			{
+				if(map[row][line] === 0)
+				{
+					previous = true;
+				}
+
+				if(map[row][line] === 1)
 			}
 		}
 	}

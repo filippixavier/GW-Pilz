@@ -73,7 +73,8 @@ var MapManager = function ()
 	{
 		if(mapCollection.hasOwnProperty(mapName))
 		{
-			map = mapCollection[mapName];
+			map = mapCollection[mapName].map;
+			title = mapName;
 		}
 		else
 		{
@@ -257,22 +258,3 @@ var MapManager = function ()
 		}
 	}
 }();
-
-var mapdata = {
-	height : 50,
-	width : 50,
-	name: "test_map01",
-	subs : [
-		{
-			x : 1,
-			y : 1,
-			height : 10,
-			width : 10
-		}
-	],
-	doors: [{
-			x: 5,
-			y: 1,
-			id: 0
-		}]
-}
