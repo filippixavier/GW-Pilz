@@ -15,7 +15,6 @@ var Obstacle = function(config){
 		this.img = AssetsManager.getImage(config.type);
 	this.width = this.img.width;
 	this.height = this.img.height;
-	renderingManager.addToStaticObjects(this.img,this.x,this.y,this.width,this.height)
 	// if (config.facing == 1)
 	// {
 	// 	this.currentFrame = 0;
@@ -50,5 +49,10 @@ var Obstacle = function(config){
 			console.log(charac.keys);
 		}
 		this.content = "";
+	}
+
+	this.awake = function()
+	{
+		renderingManager.addToStaticObjects(this.img,this.x,this.y,this.width,this.height);
 	}
 }

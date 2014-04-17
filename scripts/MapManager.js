@@ -5,6 +5,7 @@
 	var mapList;
 	var obstacles = {};
 	var title;
+	var enemies = [];
 
 	function init () {
 		mapList = maps;
@@ -52,11 +53,34 @@
 			mapCollection[title].wall = mapData.texture.wall;
 			mapCollection[title].floor = mapData.texture.floor;
 		}
+ 	}
 
-		for ( var i in mapData.objects)
+	function createObjects()
+	{
+		if(obstacles[title].length === 0)
 		{
-			var obstacle = new Obstacle(mapData.objects[i]);
-			obstacles[mapName][i] = obstacle;
+			for (var i in mapList[title].objects)
+			{
+				var obstacle = new Obstacle(mapList[title].objects[i]);
+				obstacles[title][i] = obstacle;
+			}
+		}
+		for (var i = obstacles[title].length - 1; i >= 0; i--) {
+			obstacles[title][i].awake();
+		}
+
+	}
+	function createEnemies()
+	{
+		for (var i in mapList[title].enemies)
+		{
+			var width = 64;
+			if (mapList[title].enemies[i].type == "mostre03")
+			{
+				width = 128;
+			}
+			var enemy = new Character(mapList[title].enemies[i].x*100, mapList[title].enemies[i].y*100, 0.2, width, 64, mapList[title].enemies[i].type);
+			enemies.push(enemy);
 		}
 	}
 
@@ -66,16 +90,16 @@
 		nextPositionX = door.target.x*100;
 		nextPositionY = door.target.y*100;
 		console.log(nextMap);
+		title = nextMap;
 		loadMap(nextMap,nextPositionX,nextPositionY);
 		objet.teleport(nextPositionX,nextPositionY);
-		console.log(obstacles);
 	}
 
 
 	function loadMap(mapName,x,y)
 	{
 
-	renderingManager.clearStaticObjects();
+		renderingManager.clearStaticObjects();
 		if(mapCollection.hasOwnProperty(mapName))
 		{
 			map = mapCollection[mapName].map;
@@ -85,6 +109,7 @@
 		{
 			createMap(mapName);
 		}
+		createObjects();
 		renderingManager.drawMap(map, mapCollection[mapName].door, mapCollection[mapName].floor, mapCollection[mapName].wall);
 		//player.x = x;
 		//player.y = y;
@@ -102,7 +127,9 @@
 				{
 					// afficher point d'exclamation
 					if (action == true)
+					{
 						switchMap(mapList[title].doors[i],objet);
+					}
 				}
 			// }
 		}
@@ -299,8 +326,6 @@
 
 	function getWallsPosition () {
 		var previous = false;
-		console.log(map);
-
 		for (var x = map.length - 1; x >= 0; x--) {
 			for(var y = 0; y < map[0].length; y++)
 			{

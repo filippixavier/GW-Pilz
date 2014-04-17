@@ -29,7 +29,6 @@
 			t1 = Date.now();
 			player = new Character(0,0,0.25, 64, 64, "mainchar");
 			renderingManager.follow(player);
-			console.log(player.anim);
 			requestAnimationFrame(run);
 
 		}

@@ -62,6 +62,10 @@ var renderingManager = function ()
 				}
 			}
 		}
+
+		for (var i = staticObjects.length - 1; i >= 0; i--) {
+			mapCtx.drawImage(staticObjects[i].img, staticObjects[i].x*staticObjects[i].width, staticObjects[i].y*staticObjects[i].height, staticObjects[i].width, staticObjects[i].height);
+		};
 	}
 
 	function render (game)
@@ -70,8 +74,8 @@ var renderingManager = function ()
 		cameraCtx.fillRect ( 0 , 0 , 1080 , 720 );
 		cameraCtx.fillStyle = "#f00";
 
-		dynamicCtx.drawImage(mapCanvas, 0, 0, dynamicCanvas.width, dynamicCanvas.height);
-		//dynamicCtx.clearRect(0,0,mapCanvas.width,mapCanvas.height);
+		//dynamicCtx.drawImage(mapCanvas, 0, 0, dynamicCanvas.width, dynamicCanvas.height);
+		dynamicCtx.clearRect(0,0,dynamicCanvas.width,dynamicCanvas.height);
 		for(var i = 0; assetsRendered[i]; i++)
 		{
 			if(assetsRendered[i].spritesheet === undefined)
@@ -94,9 +98,16 @@ var renderingManager = function ()
 		staticObjects = [];
 	}
 
-	function addToStaticObjects (assetData) 
+	function addToStaticObjects (img, x, y, width, height) 
 	{
-		staticObjects.push(assetData);
+		var obj = {
+			img: img,
+			x: x,
+			y: y,
+			width: width,
+			height: height
+		}
+		staticObjects.push(obj);
 	}
 
 	function addToDynamicObjects (assetData) 
