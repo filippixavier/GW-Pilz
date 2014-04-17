@@ -1,0 +1,13 @@
+var assets = {"mainchar":{"source":"./assets/PERSO DEF.png","datas":{"up":{"loop":true,"reverse":true,"duration":1000,"numberOfFrames":3,"spriteWidth":64,"spriteHeight":64,"line":0},
+																	"left":{"loop":true,"reverse":true,"duration":1000,"numberOfFrames":3,"spriteWidth":64,"spriteHeight":64,"line":3},
+																	"down":{"loop":true,"reverse":true,"duration":1000,"numberOfFrames":3,"spriteWidth":64,"spriteHeight":64,"line":1},
+																	"right":{"loop":true,"reverse":true,"duration":1000,"numberOfFrames":3,"spriteWidth":64,"spriteHeight":64,"line":2}}},
+																	
+				"floor":{"source":"./assets/sol damier.png","datas":{"spriteWidth":100,"spriteHeight":100}},
+				"wall":{"source":"./assets/mur1.png","datas":{"spriteWidth":100,"spriteHeight":100}},
+				"lit1":{"source":"./assets/lit cote.png","datas":{"spriteWidth":100,"spriteHeight":100}},
+				"table1":{"source":"./assets/table1 vide.png","datas":{"spriteWidth":100,"spriteHeight":100}},
+				"litsang1":{"source":"./assets/lit sang cote.png","datas":{"spriteWidth":100,"spriteHeight":100}},
+				"litsang2":{"source":"./assets/lit sang.png","datas":{"spriteWidth":100,"spriteHeight":100}},
+				"casier":{"source":"./assets/casier 1.png","datas":{"spriteWidth":100,"spriteHeight":100}},
+				"wallcellule":{"source":"./assets/mur capitone.png","datas":{"spriteWidth":100,"spriteHeight":100}}}
