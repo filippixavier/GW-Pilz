@@ -43,6 +43,7 @@ Character.prototype.move = function(direction, dt) {
 	}
 	MapManager.collision(this);
 	MapManager.collideDoor(this);
+	MapManager.collideObstacles(this, direction);
 	// this.event.emit("move");
 };
 

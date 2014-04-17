@@ -3,7 +3,7 @@ var MapManager = function ()
 	var map = [];
 	var mapCollection = {};
 	var mapList;
-	var obstacles = [];
+	var obstacles = {};
 	var title;
 
 	function init () {
@@ -12,6 +12,7 @@ var MapManager = function ()
 
 	function createMap(mapName)
 	{
+		obstacles[mapName] = [];
 		map = [];
 		title = mapName;
 		var mapData = mapList[mapName];
@@ -49,7 +50,7 @@ var MapManager = function ()
 		for ( var i in mapData.objects)
 		{
 			var obstacle = new Obstacle(mapData.objects[i]);
-			obstacles.push(obstacle);
+			obstacles[mapName][i] = obstacle;
 		}
 		console.log(obstacles);
 	}
@@ -82,12 +83,15 @@ var MapManager = function ()
 	{
 		for (var i in mapList[title].doors)
 		{	
-			// console.log(objet.x > (mapList[title].doors[i].x*100), objet.x < (mapList[title].doors[i].x*100)+100, objet.y > (mapList[title].doors[i].y*100), objet.y < (mapList[title].doors[i].y*100)+100);
-			if (objet.x > (mapList[title].doors[i].x*100) && objet.x < (mapList[title].doors[i].x*100)+50 && objet.y > (mapList[title].doors[i].y*100) && objet.y < (mapList[title].doors[i].y*100)+50)
-			{
-				console.log('toto');
-				switchMap(mapList[title].doors[i]);
-			}
+			// if (i == title)
+			// {
+				// console.log(objet.x > (mapList[title].doors[i].x*100), objet.x < (mapList[title].doors[i].x*100)+100, objet.y > (mapList[title].doors[i].y*100), objet.y < (mapList[title].doors[i].y*100)+100);
+				if (objet.x > (mapList[title].doors[i].x*100) && objet.x < (mapList[title].doors[i].x*100)+50 && objet.y > (mapList[title].doors[i].y*100) && objet.y < (mapList[title].doors[i].y*100)+50)
+				{
+					console.log('toto');
+					switchMap(mapList[title].doors[i]);
+				}
+			// }
 		}
 	}
 	function collision (objet)
@@ -155,12 +159,35 @@ var MapManager = function ()
 			}
 		}
 	}
+	function collideObstacles(objet)
+	{
+		for ( var i in obstacles[title])
+		{
+			if (objet.x + objet.width > (obstacles[title][i].x*100) && objet.x < (obstacles[title][i].x*100)+100 && objet.y + objet.height > (obstacles[title][i].y*100) && objet.y < (obstacles[title][i].y*100)+100)
+			{
+				if(direction.x == -1)
+					objet.x = (obstacles[title][i].x*100) +100;
+				else if(direction.x == 1)
+					objet.x = (obstacles[title][i].x*100) - objet.width;
+				else if(direction.y == -1)
+					objet.y = (obstacles[title][i].y*100) +100;
+				else if(direction.y == 1)
+					objet.y = (obstacles[title][i].y*100) - objet.width;
+				//bugs quand 2 touches appuyées
+			}
+			// if (objet.x > (obstacles[title][i].x*100) && objet.x < (obstacles[title][i].x*100) + obstacles[title][i].width && objet.y > (obstacles[title][i].y*100) && objet.y < (obstacles[title][i].y*100) + obstacles[i].height)
+			// {
+			// 	return true;
+			// }
+		}
+	}
 
 	return {
 		init: init,
 		loadMap : loadMap,
 		collision : collision,
 		collideDoor : collideDoor,
+		collideObstacles : collideObstacles,
 		get actualMap() {
 			return map;
 		}
