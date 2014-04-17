@@ -117,35 +117,37 @@ Character.prototype.setIa = function(tradius) {
 	this.isIA = true;
 };
 
-// Character.prototype.protectTerritory = function(character) {
-// 	var x,y,dx=0,dy=0;
-// 	if(this.isIA)
-// 	{
-// 		x = character.x - this.x;
-// 		y = character.y - this.y;
+Character.prototype.protectTerritory = function(character) {
+	var x,y,dx=0,dy=0;
+	if(this.isIA)
+	{
+		x = character.x - this.x;
+		y = character.y - this.y;
 
-// 		if(x*x + y*y <= this.sightRadius*this.sightRadius)
-// 		{
-// 			if(character.x + character.width < this.x)
-// 				dx = -1;
-// 			else if(character.x > this.x + this.width)
-// 				dx = 1;
-// 			if (character.y + character.height < this.y)
-// 				dy = -1;
-// 			else if(character.y > this.y + this.height)
-// 				dy = 1;
-// 		}
-// 		else
-// 		{
-// 			if()
-
-// 			else if()
-// 				{
-					
-// 				}
-// 		}
-// 	}
-// };
+		if(x*x + y*y <= this.sightRadius*this.sightRadius)
+		{
+			if(character.x + character.width < this.x)
+				dx = -1;
+			else if(character.x > this.x + this.width)
+				dx = 1;
+			if (character.y + character.height < this.y)
+				dy = -1;
+			else if(character.y > this.y + this.height)
+				dy = 1;
+		}
+		else
+		{
+			if(this.territoryCenter.x < this.x)
+				dx = -1;
+			else if(this.territoryCenter.x > this.x + this.width)
+				dx = 1;
+			if (this.territoryCenter.y < this.y)
+				dy = -1;
+			else if(this.territoryCenter.y > this.y + this.height)
+				dy = 1;
+		}
+	}
+};
 
 var direction = {x:0, y:0};
 
