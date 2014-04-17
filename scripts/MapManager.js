@@ -246,6 +246,58 @@ var MapManager = function ()
 			// }
 		}
 	}
+	function checkFacingObstacles (objet)
+	{
+		var pos = {};
+		pos.x = (objet.x / 100)|0 ;
+		pos.y = (objet.y / 100)|0 ;
+		pos.w = ((objet.x + objet.width)/ 100)|0 ;
+		pos.h = ((objet.y + objet.height)/ 100)|0 ;
+
+		for ( var i in obstacles[title])
+		{
+			if (objet.orientation == 0)
+			{
+				if (pos.y == obstacles[title][i].y || pos.w == obstacles[title][i].y+1)
+				{
+					if (objet.orientation == obstacles[title][i].facing+2%3)
+					{
+						// console.log('face up');
+					}
+				}
+			}
+			else if (objet.orientation == 1)
+			{
+				if (pos.x == obstacles[title][i].x || pos.w == obstacles[title][i].x-1)
+				{
+					if (objet.orientation == obstacles[title][i].facing+2%3)
+					{
+						// console.log('face right');
+					}
+				}
+			}
+			else if (objet.orientation == 2)
+			{
+				if (pos.y == obstacles[title][i].y || pos.w == obstacles[title][i].y-1)
+				{
+					if (objet.orientation == obstacles[title][i].facing+2%3)
+					{
+						// console.log('face down');
+					}
+				}
+			}
+			else if (objet.orientation == 3)
+			{
+				if (pos.x == obstacles[title][i].x || pos.w == obstacles[title][i].x+1)
+				{
+					if (objet.orientation == obstacles[title][i].facing+2%3)
+					{
+						// console.log('face left');
+					}
+				}
+			}
+		}
+	}
 
 	return {
 		init: init,
@@ -253,6 +305,7 @@ var MapManager = function ()
 		collision : collision,
 		collideDoor : collideDoor,
 		collideObstacles : collideObstacles,
+		checkFacingObstacles : checkFacingObstacles,
 		get actualMap() {
 			return map;
 		}

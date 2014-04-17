@@ -73,7 +73,7 @@ var renderingManager = function ()
 					previous = true;
 				}
 
-				if(map[row][line] === 1)
+				// if(map[row][line] === 1)
 			}
 		}
 	}
