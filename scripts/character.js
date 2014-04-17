@@ -7,7 +7,13 @@ function Character(speed, height, width, type)
 	this.height = height;
 	this.width = width;
 
-	this.anim = {};
+	this.type = type;
+
+	this.anim = new Animation(this, type, "up");
+	
+	this.event = new EventListener();
+	this.event.create("move");
+	// player.event.subscribe("move", clb);
 }
 
 Character.prototype.move = function(direction, dt) {
@@ -36,21 +42,41 @@ Character.prototype.move = function(direction, dt) {
 
 	if(direction.x === 0 && direction.y === 0)
 	{
-		//this.anim.stop();
+		this.anim.stop();
 	}
+	else if(this.anim.pause)
+	{
+		var sens;
+		switch(this.orientation)
+		{
+			case 0:
+				sens = "up";
+				break;
+		}
+		this.anim.start(sens);
+	}
+	MapManager.collision(this);
+	MapManager.collideDoor(this);
+
+	this.event.emit("move", this.x, this.y);
 };
 
-Character.prototype.teleport = function(position) {
-	this.x = position.x;
-	this.y = position.y;
+Character.prototype.teleport = function(x, y) {
+	this.x = x;
+	this.y = y;
+
+	this.event.emit("move", this.x, this.y);
 };
 
-Character.prototype.render = function() {
-	this.anim.posiX = this.x;
-	this.anim.posiY = this.y;
-	this.anim.height = this.height;
-	this.anim.width = this.width;
-	renderingManager.checkIfInsideCamera(this.anim);
+Character.prototype.render = function(dt) {
+	this.anim.x = this.x;
+	this.anim.y = this.y;
+
+	this.anim.update(dt);
+};
+
+Character.prototype.delete = function() {
+	this.anim.delete();
 };
 
 var direction = {x:0, y:0};

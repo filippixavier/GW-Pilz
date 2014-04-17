@@ -3,16 +3,17 @@ var renderingManager = function ()
 	window.requestAnimationFrame = window.requestAnimationFrame || window.mozRequestAnimationFrame ||
                       window.webkitRequestAnimationFrame || window.msRequestAnimationFrame;
      
-	var cameraCanvas , cameraCtx, mapCanvas, mapCtx, cameraX = 0 , cameraY = 0;
+	var cameraCanvas , cameraCtx, mapCanvas, mapCtx,dynamicCanvas, dynamicCtx, cameraX = 0 , cameraY = 0;
 
-	var assetsRendered = [];
+	var floor, wall;
+
+	var assetsRendered = [], staticObjects = [];
 	
 	function init ()
 	{
 		cameraCanvas = document.getElementById("canvas");
 		cameraCanvas.height = 720;
 		cameraCanvas.width = 1080;
-		console.log(cameraCanvas.width);
 		cameraCtx = document.getElementById("canvas").getContext("2d");
 
 		mapCanvas = document.createElement("canvas");
@@ -20,27 +21,21 @@ var renderingManager = function ()
 		mapCanvas.height = 2000;
   		mapCtx = mapCanvas.getContext("2d");
 
+  		dynamicCanvas = document.createElement("canvas");
+		dynamicCanvas.width = 2000;
+		dynamicCanvas.height = 2000;
+  		dynamicCtx = dynamicCanvas.getContext("2d");
+
   		assetsRendered = [];
+  		staticObjects = [];
 	}
 
-	function drawMap (map)
+	function drawMap (map, floorname, wallname)
 	{
+		floor = AssetsManager.getImage(floorname);
+		wall = AssetsManager.getImage(wallname);
 		mapCtx.clearRect(0,0,mapCanvas.width,mapCanvas.height);
 		mapCtx.fillStyle = "#CCCCCC";
-		// for (var i in game.rooms)
-		// {
-		// 	// console.log(game.mapCtx);
-		// 	if (game.perso.room == i)
-		// 	{
-
-		// 		game.mapCtx.fillRect(0,0,game.rooms[i].width,game.rooms[i].height);
-		// 		for (var j in game.rooms[i].doors)
-		// 		{
-		// 			game.mapCtx.fillStyle = "#f00";
-		// 			game.mapCtx.fillRect(game.rooms[i].doors[j].x, game.rooms[i].doors[j].y ,64,64);
-		// 		}
-		// 	}
-		// }
 
 		for (var line = map.length-1; line >=  0; line --)
 		{
@@ -65,52 +60,74 @@ var renderingManager = function ()
 		}
 	}
 
-	function checkIfInsideCamera (renderData) 
-	{
-		if(renderData.posiX + renderData.width >= cameraX
-			&& renderData.posiX <= cameraX + cameraCanvas.width
-			&& renderData.posiY <= cameraY + cameraCanvas.height
-			&& renderData.posiY + renderData.height >= cameraY)
-		{
-			if(assetsRendered.indexOf(renderData) === -1)
-			{
-				assetsRendered.push(renderData);
-			}
-		}
-		else
-		{
-			var index = assetsRendered.indexOf(renderData);
-			assetsRendered.splice(1, index);
-		}
-
-	}
-
 	function render (game)
 	{
 		cameraCtx.fillStyle = "#000000";
 		cameraCtx.fillRect ( 0 , 0 , 1080 , 720 );
 		cameraCtx.fillStyle = "#f00";
-		cameraCtx.drawImage(mapCanvas, cameraX , cameraY , mapCanvas.width, mapCanvas.height);
-		
+
+		dynamicCtx.clearRect(0, 0, dynamicCanvas.width, dynamicCanvas.height);
 		for(var i = 0; assetsRendered[i]; i++)
 		{
-			if(assetsRendered[i].img === undefined)
+			if(assetsRendered[i].spritesheet === undefined)
 			{
-				cameraCtx.fillRect (assetsRendered[i].posiX - cameraX, assetsRendered[i].posiY - cameraY, assetsRendered[i].width, assetsRendered[i].height);
+				//cameraCtx.fillRect (assetsRendered[i].posiX - cameraX, assetsRendered[i].posiY - cameraY, assetsRendered[i].width, assetsRendered[i].height);
 			}
 			else
 			{
-				//cameraCtx.drawImage(assetsRendered.img, cameraX , cameraY , mapCanvas.width, mapCanvas.height);
+				dynamicCtx.drawImage(assetsRendered[i].spritesheet, assetsRendered[i].spriteX, assetsRendered[i].spriteY , assetsRendered[i].width, assetsRendered[i].height, assetsRendered[i].x, assetsRendered[i].y, assetsRendered[i].width, assetsRendered[i].height);
 			}
 		}
 
+		cameraCtx.drawImage(mapCanvas, cameraX, cameraY, cameraCanvas.width, cameraCanvas.height, 0, 0, cameraCanvas.width, cameraCanvas.height);
+		cameraCtx.drawImage(dynamicCanvas, cameraX, cameraY, cameraCanvas.width, cameraCanvas.height, 0, 0, cameraCanvas.width, cameraCanvas.height);
 		//cameraCtx.fillRect ( game.perso.x , game.perso.y , game.perso.w , game.perso.h );
 	}
+
+	function clearStaticObjects ()
+	{
+		staticObjects = [];
+	}
+
+	function addToStaticObjects (assetData) 
+	{
+		staticObjects.push(assetData);
+	}
+
+	function addToDynamicObjects (assetData) 
+	{
+		if(assetsRendered.indexOf(assetData) == -1)
+		{
+			assetsRendered.push(assetData);
+		}
+	}
+
+	function removeFromDynamicObjects (assetData) 
+	{
+		var index = assetData.indexOf(assetData);
+		assetData.splice(index, 1);
+	}
+
+	function follow (character) {
+		character.event.subscribe("move",moveCamera);
+		// cameraX = character.x + (cameraCanvas.height/2);
+		// cameraY = character.y + (cameraCanvas.height/2);
+	}
+
+	function moveCamera (x, y) {
+		cameraX = x - (cameraCanvas.width/2);
+		cameraY = y - (cameraCanvas.height/2);;
+	}
+
 	return {
 		drawMap : drawMap,
 		init : init,
 		render : render,
-		checkIfInsideCamera: checkIfInsideCamera,
+		clearStaticObjects: clearStaticObjects,
+		addToStaticObjects: addToStaticObjects,
+		addToDynamicObjects: addToDynamicObjects,
+		removeFromDynamicObjects: removeFromDynamicObjects,
+		follow: follow,
 		get cameraX(){
 			return cameraX;
 		},
