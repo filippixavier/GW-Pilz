@@ -19,7 +19,7 @@
 			MapManager.loadMap("bloc_operatoire",2,2);
 			console.log("done");
 			t1 = Date.now();
-			player = new Character(0,0,1, 64, 64, "mainchar");
+			player = new Character(0,0,0.25, 64, 64, "mainchar");
 			renderingManager.follow(player);
 			console.log(player.anim);
 			requestAnimationFrame(run);

@@ -151,29 +151,44 @@ Character.prototype.protectTerritory = function(character) {
 
 var direction = {x:0, y:0};
 
-addEventListener("keydown", function(e)
-{
-	switch(e.keyCode)
-	{
-		case 90:
-			direction.y = -1;
-			break;
-		case 83:
-			direction.y = 1;
-			break;
-		case 81:
-			direction.x = -1;
-			break;
-		case 68:
-			direction.x = 1;
-			break;
-	}
-});
+(function(){
+	var eventList = {};
 
-addEventListener("keyup", function(e)
-{
-	if(e.keyCode === 90 || e.keyCode === 83)
-		direction.y = 0;
-	if(e.keyCode === 81 || e.keyCode === 68)
-		direction.x = 0;
-});
+	window.addEventListener("keydown", function(e)
+	{
+		eventList[e.keyCode] = true;
+		calculateDirection();
+	});
+
+	window.addEventListener("keyup", function(e)
+	{
+		eventList[e.keyCode] = false;
+		calculateDirection();
+	});
+
+	function calculateDirection()
+	{
+		if(eventList[90])
+			direction.y -= 1;
+		if(eventList[83])
+			direction.y += 1;
+		if(eventList[81])
+			direction.x -= 1;
+		if(eventList[68])
+			direction.x += 1;
+
+		if(direction.x < -1)
+			direction.x = -1;
+		if(direction.x > 1)
+			direction.x = 1;
+		if(direction.y < -1)
+			direction.y = -1;
+		if(direction.y > 1)
+			direction.y = 1;
+
+		if(!eventList[90] && !eventList[83])
+			direction.y = 0;
+		if(!eventList[81] && !eventList[68])
+			direction.x = 0;
+	}
+})();
