@@ -74,8 +74,8 @@ var renderingManager = function ()
 		cameraCtx.fillRect ( 0 , 0 , 1080 , 720 );
 		cameraCtx.fillStyle = "#f00";
 
-		dynamicCtx.drawImage(mapCanvas, 0, 0, dynamicCanvas.width, dynamicCanvas.height);
-		//dynamicCtx.clearRect(0,0,mapCanvas.width,mapCanvas.height);
+		//dynamicCtx.drawImage(mapCanvas, 0, 0, dynamicCanvas.width, dynamicCanvas.height);
+		dynamicCtx.clearRect(0,0,dynamicCanvas.width,dynamicCanvas.height);
 		for(var i = 0; assetsRendered[i]; i++)
 		{
 			if(assetsRendered[i].spritesheet === undefined)

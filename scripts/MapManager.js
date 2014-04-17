@@ -52,11 +52,14 @@
 			mapCollection[title].wall = mapData.texture.wall;
 			mapCollection[title].floor = mapData.texture.floor;
 		}
+ 	}
 
-		for ( var i in mapData.objects)
+	function createObjects()
+	{
+		for (var i in mapList[title].objects)
 		{
-			var obstacle = new Obstacle(mapData.objects[i]);
-			obstacles[mapName][i] = obstacle;
+			var obstacle = new Obstacle(mapList[title].objects[i]);
+			obstacles[title][i] = obstacle;
 		}
 	}
 
@@ -86,6 +89,7 @@
 		{
 			createMap(mapName);
 		}
+		createObjects();
 		renderingManager.drawMap(map, mapCollection[mapName].door, mapCollection[mapName].floor, mapCollection[mapName].wall);
 		//player.x = x;
 		//player.y = y;
