@@ -6,7 +6,7 @@ function Character(x,y,speed, height, width, type)
 	this.speed = speed;
 	this.height = height;
 	this.width = width;
-
+	this.keys = [];
 	this.type = type;
 
 	this.anim = new Animation(this, type, "up");

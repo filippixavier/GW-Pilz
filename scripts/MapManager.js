@@ -244,41 +244,41 @@ var MapManager = function ()
 		{
 			if (objet.orientation == 0)
 			{
-				if (pos.y == obstacles[title][i].y || pos.w == obstacles[title][i].y+1)
+				if (pos.x == obstacles[title][i].x && (pos.y == obstacles[title][i].y || pos.w == obstacles[title][i].y+1))
 				{
-					if (objet.orientation == obstacles[title][i].facing+2%3)
+					if (objet.orientation == (obstacles[title][i].facing+2)%4)
 					{
-						// console.log('face up');
+						obstacles[title][i].action(objet);
 					}
 				}
 			}
 			else if (objet.orientation == 1)
 			{
-				if (pos.x == obstacles[title][i].x || pos.w == obstacles[title][i].x-1)
+				if (pos.y == obstacles[title][i].y && (pos.w == obstacles[title][i].x || pos.w == obstacles[title][i].x-1))
 				{
-					if (objet.orientation == obstacles[title][i].facing+2%3)
+					if (objet.orientation == (obstacles[title][i].facing+2)%4)
 					{
-						// console.log('face right');
+						obstacles[title][i].action(objet);
 					}
 				}
 			}
 			else if (objet.orientation == 2)
 			{
-				if (pos.y == obstacles[title][i].y || pos.w == obstacles[title][i].y-1)
+				if (pos.x == obstacles[title][i].x && (pos.h == obstacles[title][i].y || pos.w == obstacles[title][i].y-1))
 				{
-					if (objet.orientation == obstacles[title][i].facing+2%3)
+					if (objet.orientation == (obstacles[title][i].facing+2)%4)
 					{
-						// console.log('face down');
+						obstacles[title][i].action(objet);
 					}
 				}
 			}
 			else if (objet.orientation == 3)
 			{
-				if (pos.x == obstacles[title][i].x || pos.w == obstacles[title][i].x+1)
+				if (pos.y == obstacles[title][i].y && (pos.x == obstacles[title][i].x || pos.w == obstacles[title][i].x+1))
 				{
-					if (objet.orientation == obstacles[title][i].facing+2%3)
+					if (objet.orientation == (obstacles[title][i].facing+2)%4)
 					{
-						// console.log('face left');
+						obstacles[title][i].action(objet);
 					}
 				}
 			}

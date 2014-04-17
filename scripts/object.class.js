@@ -26,20 +26,16 @@ var Obstacle = function(config){
 	{
 		// context.drawImage(this.img, 0, 0, this.currentFrame*this.width, 0, this.x, this.y, this.width, this.height);
 	}
-	this.action = function()
+	this.action = function(charac)
 	{
-		this.content.substr(0,this.content.length-2);
 		if (this.content == "pilz")
 		{
-			// ajouter pilz
+			// charac.pilz++;
 		}
-		else if (this.content == "key")
+		else if (this.content.substr(0,this.content.length-1) == "key")
 		{
-			//  ajouter clef
-		}
-		else if (this.content == "note")
-		{
-			//  afficher une note
+			charac.keys.push(this.content)
+			console.log(charac.keys);
 		}
 		this.content = "";
 	}
