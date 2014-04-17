@@ -57,11 +57,18 @@
 
 	function createObjects()
 	{
-		for (var i in mapList[title].objects)
+		if(obstacles[title].length === 0)
 		{
-			var obstacle = new Obstacle(mapList[title].objects[i]);
-			obstacles[title][i] = obstacle;
+			for (var i in mapList[title].objects)
+			{
+				var obstacle = new Obstacle(mapList[title].objects[i]);
+				obstacles[title][i] = obstacle;
+			}
 		}
+		for (var i = obstacles[title].length - 1; i >= 0; i--) {
+			obstacles[title][i].awake();
+		}
+
 	}
 	function createEnemies()
 	{
@@ -86,7 +93,6 @@
 		title = nextMap;
 		loadMap(nextMap,nextPositionX,nextPositionY);
 		objet.teleport(nextPositionX,nextPositionY);
-		console.log(obstacles);
 	}
 
 
@@ -320,8 +326,6 @@
 
 	function getWallsPosition () {
 		var previous = false;
-		console.log(map);
-
 		for (var x = map.length - 1; x >= 0; x--) {
 			for(var y = 0; y < map[0].length; y++)
 			{
