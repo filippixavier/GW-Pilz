@@ -3,15 +3,20 @@
 	window.requestAnimationFrame = window.requestAnimationFrame || window.mozRequestAnimationFrame ||
                               window.webkitRequestAnimationFrame || window.msRequestAnimationFrame;
 
-    var player, t1, t2, dt;
+    var player, t1, t2, dt,playmusique1,playmusique2;
+
+		
 	function init () {
 		AssetsManager.init()
+		timer.start();
 		MusiqueManager.musique1.play();
 		//MusiqueManager.musique2.play();
 		//MusiqueManager.musique3.play();
 		MapManager.init();
 		renderingManager.init();
+		playmusique1 = playmusique2 = false;
 		requestAnimationFrame(loadAssets);
+
 
 	}
 
@@ -38,17 +43,28 @@
 		t2 = Date.now();
 		dt = t2 - t1;
 		t1 = t2;
+
 		player.move(direction, dt);
 		player.render(dt);
 		renderingManager.render();
-		if(timer.state == 2)
+		timer.update(dt);
+		console.log(timer.state);
+		if(timer.state == 2 && !playmusique1)
 		{
-			MusiqueManager.musique2.play();	
+			MusiqueManager.musique2.play();
+			MusiqueManager.musique3.stop();	
+			playmusique1= true;
+			playmusique2 = false;
 		}
 
-		if(timer.state == 3)
+		if(timer.state == 3 && !playmusique2)
 		{
-			MusiqueManager.musique3.play();	
+			MusiqueManager.musique3.play();
+			MusiqueManager.musique2.stop();
+			playmusique1 = false;
+
+
+			playmusique2= true;	
 		}
 
 		requestAnimationFrame(run);

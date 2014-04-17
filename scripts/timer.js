@@ -1,10 +1,10 @@
 var timer = function()
 {
 	// var 
-	var time;
+	var time=0;
 	var state;
-	var sec;
-	var min;
+	var sec=0;
+	var min=0;
 	var pause = false;
 	var timer;
 	//function
@@ -12,7 +12,7 @@ var timer = function()
 
 	function start()
 	{
-		time = 60000;
+		time = 243000;
 	}
 	function update (dt) 
 	{
@@ -21,29 +21,19 @@ var timer = function()
 			time -= dt;
 		}
 		stateUpdate();
-
-	if(time> 1000)
+		
+	sec = Math.floor(time/1000)%60;
+	min = Math.floor(time/60000)%60;
+	if(time <= 0)
 	{
-		sec ++;
-		time -= 1000;
-	}
-	if(sec > 60)
-	{
-		min ++;
-		sec -= 60;
-	}
-	if( time < 1000)
-	{
-		sec --;
-		time += 1000;
-	}
-	if(sec < 60)
-	{
-		min --;
-		sec += 60;
+		time = 0;
+		sec = 0;
+		min = 0;
 	}
 
-	timer = min+":"+sec;
+	stateUpdate();
+	timer = min+":";
+	timer += (sec<10)? "0"+sec :sec;
 	}
 	function stateUpdate()
 	{
@@ -65,7 +55,7 @@ var timer = function()
 		time += x;
 	}
 
-	return {start : start, update : update, changeTime : changeTime,set pause(x){pause = x;}, get time(){return timer;}};
+	return {start : start, update : update, changeTime : changeTime,set pause(x){pause = x;}, get time(){return timer;},get state(){return state;}};
 		
 }(); 
 		  
