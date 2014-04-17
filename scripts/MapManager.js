@@ -66,6 +66,7 @@
 		nextPositionX = door.target.x*100;
 		nextPositionY = door.target.y*100;
 		console.log(nextMap);
+		title = nextMap;
 		loadMap(nextMap,nextPositionX,nextPositionY);
 		objet.teleport(nextPositionX,nextPositionY);
 		console.log(obstacles);
@@ -75,7 +76,7 @@
 	function loadMap(mapName,x,y)
 	{
 
-	renderingManager.clearStaticObjects();
+		renderingManager.clearStaticObjects();
 		if(mapCollection.hasOwnProperty(mapName))
 		{
 			map = mapCollection[mapName].map;
@@ -102,7 +103,9 @@
 				{
 					// afficher point d'exclamation
 					if (action == true)
+					{
 						switchMap(mapList[title].doors[i],objet);
+					}
 				}
 			// }
 		}
