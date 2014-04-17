@@ -101,11 +101,7 @@
 				if (objet.x > (mapList[title].doors[i].x*100) && objet.x < (mapList[title].doors[i].x*100)+50 && objet.y > (mapList[title].doors[i].y*100) && objet.y < (mapList[title].doors[i].y*100)+50)
 				{
 					console.log('toto');
-<<<<<<< HEAD
 					switchMap(mapList[title].doors[i],objet);
-=======
-					switchMap(mapList[title].doors[i]);
->>>>>>> af7c5de29263c7be636f2d0797b23091a668a919
 				}
 			// }
 		}
