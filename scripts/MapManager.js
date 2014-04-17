@@ -44,7 +44,11 @@ var MapManager = function ()
 
 		if(!mapCollection.hasOwnProperty(mapData.name))
 		{
-			mapCollection[mapData.name] = map;
+			mapCollection[title] = {};
+			mapCollection[title].map = map;
+			mapCollection[title].door = mapData.texture.door;
+			mapCollection[title].wall = mapData.texture.wall;
+			mapCollection[title].floor = mapData.texture.floor;
 		}
 
 		for ( var i in mapData.objects)
@@ -60,6 +64,7 @@ var MapManager = function ()
 		nextMap = door.target.name;
 		nextPositionX = door.target.x;
 		nextPositionY = door.target.y;
+		console.log(nextMap);
 		loadMap(nextMap,nextPositionX,nextPositionY);
 
 	}
@@ -74,18 +79,18 @@ var MapManager = function ()
 		{
 			createMap(mapName);
 		}
-
-		renderingManager.drawMap(map, mapList[title].floor, mapList[title].wall);
+		renderingManager.drawMap(map, mapCollection[mapName].door, mapCollection[mapName].floor, mapCollection[mapName].wall);
 		//player.x = x;
 		//player.y = y;
 	}
 	
 	function collideDoor (objet)
 	{
-		for (var i in mapList[title].doors)
+		for (var i = 0; i < mapList[title].doors.length; i++)
 		{	
 			// if (i == title)
 			// {
+				// console.log(i, title, mapList[title], mapList[title].doors, mapList[title].doors[i]);
 				// console.log(objet.x > (mapList[title].doors[i].x*100), objet.x < (mapList[title].doors[i].x*100)+100, objet.y > (mapList[title].doors[i].y*100), objet.y < (mapList[title].doors[i].y*100)+100);
 				if (objet.x > (mapList[title].doors[i].x*100) && objet.x < (mapList[title].doors[i].x*100)+50 && objet.y > (mapList[title].doors[i].y*100) && objet.y < (mapList[title].doors[i].y*100)+50)
 				{
@@ -166,14 +171,40 @@ var MapManager = function ()
 		{
 			if (objet.x + objet.width > (obstacles[title][i].x*100) && objet.x < (obstacles[title][i].x*100)+100 && objet.y + objet.height > (obstacles[title][i].y*100) && objet.y < (obstacles[title][i].y*100)+100)
 			{
+				if(direction.y == 0)
+				{
 				if(direction.x == -1)
 					objet.x = (obstacles[title][i].x*100) +100;
 				else if(direction.x == 1)
 					objet.x = (obstacles[title][i].x*100) - objet.width;
-				else if(direction.y == -1)
-					objet.y = (obstacles[title][i].y*100) +100;
-				else if(direction.y == 1)
-					objet.y = (obstacles[title][i].y*100) - objet.width;
+				}
+				else
+				{
+					if(direction.x == 0)
+					{
+						if(direction.y == -1)
+							objet.y = (obstacles[title][i].y*100) +100;
+						else if(direction.y == 1)
+							objet.y = (obstacles[title][i].y*100) - objet.height;
+					}
+					if (direction.x == 1)
+					{
+						objet.y = (obstacles[title][i].y*100) - objet.height;
+						if(direction.x == 1)
+							objet.x ++;
+						else if(direction.x == -1)
+							objet.x --;
+					}
+					if (direction.x == 1)
+					{
+						objet.y = (obstacles[title][i].y*100) +100;
+						if(direction.x == 1)
+							objet.x ++;
+						else if(direction.x == -1)
+							objet.x --;
+					}
+				}
+
 				//bugs quand 2 touches appuyées
 			}
 			// if (objet.x > (obstacles[title][i].x*100) && objet.x < (obstacles[title][i].x*100) + obstacles[title][i].width && objet.y > (obstacles[title][i].y*100) && objet.y < (obstacles[title][i].y*100) + obstacles[i].height)
