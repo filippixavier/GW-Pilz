@@ -21,6 +21,7 @@ var timer = function()
 			time -= dt;
 		}
 		stateUpdate();
+		
 	if(time> 1000)
 	{
 		sec ++;
