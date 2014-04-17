@@ -91,7 +91,7 @@ Character.prototype.delete = function() {
 	this.anim.delete();
 };
 
-Character.prototype.setIa = function(x, y, ) {
+Character.prototype.setIa = function(x, y) {
 	// body...
 };
 
