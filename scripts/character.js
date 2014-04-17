@@ -150,11 +150,18 @@ Character.prototype.protectTerritory = function(character) {
 };
 
 var direction = {x:0, y:0};
+<<<<<<< HEAD
 
 (function(){
 	var eventList = {};
 
 	window.addEventListener("keydown", function(e)
+=======
+var action = false;
+addEventListener("keydown", function(e)
+{
+	switch(e.keyCode)
+>>>>>>> 38d39e07cc67356657e5bad58de5a834c3532e87
 	{
 		eventList[e.keyCode] = true;
 		calculateDirection();
@@ -181,6 +188,7 @@ var direction = {x:0, y:0};
 			direction.x = -1;
 		if(direction.x > 1)
 			direction.x = 1;
+<<<<<<< HEAD
 		if(direction.y < -1)
 			direction.y = -1;
 		if(direction.y > 1)
@@ -192,3 +200,26 @@ var direction = {x:0, y:0};
 			direction.x = 0;
 	}
 })();
+=======
+			break;
+		case 32:
+			action = true;
+			break;
+	}
+});
+
+addEventListener("keyup", function(e)
+{
+	if(e.keyCode === 90 || e.keyCode === 83)
+	{
+		action = false;
+		direction.y = 0;
+	}
+
+	if(e.keyCode === 81 || e.keyCode === 68)
+	{
+		action = false;
+		direction.x = 0;
+	}
+});
+>>>>>>> 38d39e07cc67356657e5bad58de5a834c3532e87
