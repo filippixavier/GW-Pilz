@@ -68,19 +68,26 @@
 		for (var i = obstacles[title].length - 1; i >= 0; i--) {
 			obstacles[title][i].awake();
 		}
-
 	}
+
 	function createEnemies()
 	{
-		for (var i in mapList[title].enemies)
+		// for (var i in mapList[title].enemies.n1)
+		// {
+		// 	var width = 64;
+		// 	if (mapList[title].enemies.n1[i].type == "mostre03")
+		// 	{
+		// 		width = 128;
+		// 	}
+		// 	var enemy = new Character(mapList[title].enemies.n1[i].x*100, mapList[title].enemies.n1[i].y*100, 0.2, width, 64, mapList[title].enemies.n1[i].type);
+		// 	enemies.push(enemy);
+		// }
+		var enemiesList, width;
+		console.log(timer.state);
+		if(timer.state >= 1)
 		{
-			var width = 64;
-			if (mapList[title].enemies[i].type == "mostre03")
-			{
-				width = 128;
-			}
-			var enemy = new Character(mapList[title].enemies[i].x*100, mapList[title].enemies[i].y*100, 0.2, width, 64, mapList[title].enemies[i].type);
-			enemies.push(enemy);
+			enemiesList = mapList[title].enemies.n1;
+			console.log(enemiesList);
 		}
 	}
 
@@ -110,6 +117,7 @@
 			createMap(mapName);
 		}
 		createObjects();
+		createEnemies();
 		renderingManager.drawMap(map, mapCollection[mapName].door, mapCollection[mapName].floor, mapCollection[mapName].wall);
 		//player.x = x;
 		//player.y = y;

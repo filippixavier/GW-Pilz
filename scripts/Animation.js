@@ -16,7 +16,7 @@ function Animation(parent, spritesheetName, startAnim, startOnLaunch)
 	this.width = this.subAnims[startAnim].spriteWidth;
 	this.height = this.subAnims[startAnim].spriteHeight;
 	this.spriteX = 0;
-	this.spriteY = this.subAnims[startAnim].line * this.height;
+	this.spriteY = this.subAnims[startAnim].line;
 	this.loop = this.subAnims[startAnim].loop;
 	this.reverse = this.subAnims[startAnim].reverse;
 	this.duration = this.subAnims[startAnim].duration;

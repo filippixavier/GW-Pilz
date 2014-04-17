@@ -9,7 +9,7 @@ function Character(x,y,speed, height, width, type)
 	this.keys = [];
 	this.type = type;
 
-	this.anim = new Animation(this, type, "up");
+	this.anim = new Animation(this, type, "down");
 	
 	this.event = new EventListener();
 	this.event.create("move");

@@ -47,7 +47,6 @@
 		player.render(dt);
 		renderingManager.render();
 		timer.update(dt);
-		console.log(timer.state);
 		if(timer.state == 2 && !playmusique1)
 		{
 			MusiqueManager.musique3.stop();
