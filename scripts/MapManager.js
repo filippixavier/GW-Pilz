@@ -5,7 +5,7 @@
 	var mapList;
 	var obstacles = {};
 	var title;
-	var enemies = [];
+	var enemies = {n1:[], n2:[], n3:[]};
 
 	function init () {
 		mapList = maps;
@@ -70,25 +70,41 @@
 		}
 	}
 
-	function createEnemies()
+	function createEnemiesOnMapChange()
 	{
-		// for (var i in mapList[title].enemies.n1)
-		// {
-		// 	var width = 64;
-		// 	if (mapList[title].enemies.n1[i].type == "mostre03")
-		// 	{
-		// 		width = 128;
-		// 	}
-		// 	var enemy = new Character(mapList[title].enemies.n1[i].x*100, mapList[title].enemies.n1[i].y*100, 0.2, width, 64, mapList[title].enemies.n1[i].type);
-		// 	enemies.push(enemy);
-		// }
-		var enemiesList, width;
+		enemies.n1 = [];
+		enemies.n2 = [];
+		enemies.n3 = [];
+		var enemiesList, width, enemy, state, n;
 		console.log(timer.state);
-		if(timer.state >= 1)
+		state = timer.state;
+		while(state > 0)
 		{
-			enemiesList = mapList[title].enemies.n1;
-			console.log(enemiesList);
+			n='n'+state;
+			//createEnemies(n);
+			state--;
 		}
+
+	}
+
+	function createEnemies(n)
+	{
+		enemiesList = mapList[title].enemies[n];
+		if(enemiesList === undefined)
+			return;
+		width = (n === "n3")? 128:64;
+		for (var i = enemiesList.length - 1; i >= 0; i--) {
+			enemy = new Character(enemiesList[i].x*width, enemiesList[i].y*width,0.2,width,64,enemiesList[i].type);
+			enemies[n].push(enemy);
+		};
+	}
+
+	function deleteEnemies (n) 
+	{
+		for (var i = enemies[n].length - 1; i >= 0; i--) {
+			enemies[n][i].delete();
+		}
+		enemies[n] = [];
 	}
 
 	function switchMap(door,objet)
@@ -117,7 +133,7 @@
 			createMap(mapName);
 		}
 		createObjects();
-		createEnemies();
+		createEnemiesOnMapChange();
 		renderingManager.drawMap(map, mapCollection[mapName].door, mapCollection[mapName].floor, mapCollection[mapName].wall);
 		//player.x = x;
 		//player.y = y;
@@ -197,39 +213,6 @@
 		{
 			if (objet.x + objet.width > (obstacles[title][i].x*100) && objet.x < (obstacles[title][i].x*100)+100 && objet.y + objet.height > (obstacles[title][i].y*100) && objet.y < (obstacles[title][i].y*100)+100)
 			{
-				// if(direction.y == 0)
-				// {
-				// if(direction.x == -1)
-				// 	objet.x = (obstacles[title][i].x*100) +100;
-				// else if(direction.x == 1)
-				// 	objet.x = (obstacles[title][i].x*100) - objet.width;
-				// }
-				// else
-				// {
-				// 	if(direction.x == 0)
-				// 	{
-				// 		if(direction.y == -1)
-				// 			objet.y = (obstacles[title][i].y*100) +100;
-				// 		else if(direction.y == 1)
-				// 			objet.y = (obstacles[title][i].y*100) - objet.height;
-				// 	}
-				// 	if (direction.x == 1)
-				// 	{
-				// 		objet.y = (obstacles[title][i].y*100) - objet.height;
-				// 		if(direction.x == 1)
-				// 			objet.x ++;
-				// 		else if(direction.x == -1)
-				// 			objet.x --;
-				// 	}
-				// 	if (direction.x == 1)
-				// 	{
-				// 		objet.y = (obstacles[title][i].y*100) +100;
-				// 		if(direction.x == 1)
-				// 			objet.x ++;
-				// 		else if(direction.x == -1)
-				// 			objet.x --;
-				// 	}
-				// }
 				if (objet.orientation == 2 )
 				{
 					objet.y = (obstacles[title][i].y*100) - objet.height;
@@ -262,13 +245,7 @@
 					else if(direction.y == -1)
 						objet.y --;
 				}
-
-				//bugs quand 2 touches appuyées
 			}
-			// if (objet.x > (obstacles[title][i].x*100) && objet.x < (obstacles[title][i].x*100) + obstacles[title][i].width && objet.y > (obstacles[title][i].y*100) && objet.y < (obstacles[title][i].y*100) + obstacles[i].height)
-			// {
-			// 	return true;
-			// }
 		}
 	}
 	function checkFacingObstacles (objet)
@@ -346,8 +323,22 @@
 				}
 			}
 		};
-
 	}
+
+	function onStateChange(state)
+	{
+		var n = "n"+state;
+		if(enemies[n] != undefined && enemies[n].length === 0)
+		{
+			//createEnemies(n);
+		}
+		n = "n"+(state+1);
+		if(enemies[n] != undefined)
+		{
+			deleteEnemies(n);
+		}
+	}
+
 	return {
 		init: init,
 		loadMap : loadMap,
@@ -357,6 +348,7 @@
 		checkFacingObstacles : checkFacingObstacles,
 		get actualMap() {
 			return map;
-		}
+		},
+		onStateChange: onStateChange
 	}
 }();

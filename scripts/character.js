@@ -1,15 +1,33 @@
-function Character(x,y,speed, height, width, type)
+function Character(x,y,speed, height, width, type, orientation)
 {
 	this.x = x;
 	this.y = y;
-	this.orientation = 0;
+	this.orientation = orientation || 2;
 	this.speed = speed;
 	this.height = height;
 	this.width = width;
 	this.keys = [];
 	this.type = type;
 
-	this.anim = new Animation(this, type, "down");
+
+	var sens;
+	switch(this.orientation)
+	{
+		case 0:
+			sens = "up";
+			break;
+		case 1:
+			sens = "right";
+			break;
+		case 2:
+			sens = "down";
+			break;
+		case 3:
+			sens = "left";
+			break;
+	}
+
+	this.anim = new Animation(this, type, sens);
 	
 	this.event = new EventListener();
 	this.event.create("move");

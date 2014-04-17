@@ -25,7 +25,7 @@
 		if(AssetsManager.checkDone())
 		{
 			MapManager.loadMap("bloc_operatoire",2,2);
-			console.log("done");
+			timer.subscribe(MapManager.onStateChange);
 			t1 = Date.now();
 			player = new Character(0,0,0.25, 64, 64, "mainchar");
 			renderingManager.follow(player);
