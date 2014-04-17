@@ -5,6 +5,7 @@
 	var mapList;
 	var obstacles = {};
 	var title;
+	var enemies = [];
 
 	function init () {
 		mapList = maps;
@@ -60,6 +61,19 @@
 		{
 			var obstacle = new Obstacle(mapList[title].objects[i]);
 			obstacles[title][i] = obstacle;
+		}
+	}
+	function createEnemies()
+	{
+		for (var i in mapList[title].enemies)
+		{
+			var width = 64;
+			if (mapList[title].enemies[i].type == "mostre03")
+			{
+				width = 128;
+			}
+			var enemy = new Character(mapList[title].enemies[i].x*100, mapList[title].enemies[i].y*100, 0.2, width, 64, mapList[title].enemies[i].type);
+			enemies.push(enemy);
 		}
 	}
 
