@@ -14,6 +14,14 @@ function Character(speed, height, width, type)
 	this.event = new EventListener();
 	this.event.create("move");
 	// player.event.subscribe("move", clb);
+	
+	this.sightRadius = -1;
+	this.angleRadius = -1;
+	this.territoryCenter = {x: 0, y: 0};
+	this.territoryRadius = -1;
+	this.pattern = [];
+	this.patternMaxDist = -1;
+	this.isIA = false;
 }
 
 Character.prototype.move = function(direction, dt) {
@@ -81,6 +89,10 @@ Character.prototype.render = function(dt) {
 
 Character.prototype.delete = function() {
 	this.anim.delete();
+};
+
+Character.prototype.setIa = function(x, y, ) {
+	// body...
 };
 
 var direction = {x:0, y:0};
