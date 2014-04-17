@@ -91,9 +91,20 @@ Character.prototype.delete = function() {
 	this.anim.delete();
 };
 
-Character.prototype.setIa = function(x, y ) {
+Character.prototype.setIa = function() {
 	this.territoryCenter.x = this.x;
 	this.territoryCenter.x = this.x;
+	this.territoryRadius = 200;
+
+};
+
+Character.prototype.distanceBetween =function (target) {
+	var _dx,_dy;
+    _dx = this.x - target.x;
+    _dy = this.y - target.y;
+
+    return Math.sqrt(_dx * _dx + _dy * _dy);
+
 };
 
 var direction = {x:0, y:0};
