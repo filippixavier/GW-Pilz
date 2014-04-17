@@ -30,7 +30,6 @@ function Animation(parent, spritesheetName, startAnim, startOnLaunch)
 Animation.prototype.start = function(subAnimName) {
 	if(subAnimName === undefined)
 		return;
-	
 	if(this.actualAnim != subAnimName)
 	{
 		this.actualAnim = subAnimName;
