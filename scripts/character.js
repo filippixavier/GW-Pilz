@@ -1,7 +1,7 @@
-function Character(speed, height, width, type)
+function Character(x,y,speed, height, width, type)
 {
-	this.x = 0;
-	this.y = 0;
+	this.x = x;
+	this.y = y;
 	this.orientation = 0;
 	this.speed = speed;
 	this.height = height;
@@ -91,8 +91,10 @@ Character.prototype.delete = function() {
 	this.anim.delete();
 };
 
-Character.prototype.setIa = function(x, y) {
-	// body...
+
+Character.prototype.setIa = function(x, y ) {
+	this.territoryCenter.x = this.x;
+	this.territoryCenter.x = this.x;
 };
 
 var direction = {x:0, y:0};

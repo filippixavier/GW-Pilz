@@ -5,7 +5,7 @@ var renderingManager = function ()
      
 	var cameraCanvas , cameraCtx, mapCanvas, mapCtx,dynamicCanvas, dynamicCtx, cameraX = 0 , cameraY = 0;
 
-	var floor, wall;
+	var floor, wall, door;
 
 	var assetsRendered = [], staticObjects = [];
 	
@@ -30,10 +30,11 @@ var renderingManager = function ()
   		staticObjects = [];
 	}
 
-	function drawMap (map, floorname, wallname)
+	function drawMap (map, doorname, floorname, wallname)
 	{
 		floor = AssetsManager.getImage(floorname);
 		wall = AssetsManager.getImage(wallname);
+		door = AssetsManager.getImage(doorname);
 		mapCtx.clearRect(0,0,mapCanvas.width,mapCanvas.height);
 		mapCtx.fillStyle = "#CCCCCC";
 
@@ -43,8 +44,7 @@ var renderingManager = function ()
 			{
 				if (map[line][row] == 1)
 				{
-					mapCtx.fillStyle = "#CCCCCC";
-					mapCtx.fillRect(line*100,row*100,100,100);
+					mapCtx.drawImage(floor, line*100, row*100, 100, 100);
 				}
 				else if (map[line][row] == 0)
 				{
