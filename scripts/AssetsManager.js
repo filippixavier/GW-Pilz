@@ -5,7 +5,7 @@ var AssetsManager = function()
 
 	function init()
 	{
-		for(imgName in assets)
+		for(var imgName in assets)
 		{
 			if(assets.hasOwnProperty(imgName))
 			{
@@ -13,7 +13,7 @@ var AssetsManager = function()
 			}
 		}
 
-		for(imgName in assets)
+		for(var imgName in assets)
 		{
 			if(assets.hasOwnProperty(imgName))
 			{
@@ -42,7 +42,10 @@ var AssetsManager = function()
 
 	function getAnimData(name)
 	{
-		return assets[name].datas;
+		if(assets.hasOwnProperty(name))
+			return assets[name].datas;
+		else
+			return null;
 	}
 
 	return {

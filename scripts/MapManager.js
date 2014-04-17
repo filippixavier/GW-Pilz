@@ -79,6 +79,7 @@ var MapManager = function ()
 		//player.x = x;
 		//player.y = y;
 	}
+	
 	function collideDoor (objet)
 	{
 		for (var i in mapList[title].doors)
