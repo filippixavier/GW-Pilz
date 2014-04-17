@@ -1,4 +1,4 @@
-function Animation(parent, spritesheetName, startAnim)
+function Animation(parent, spritesheetName, startAnim, startOnLaunch)
 {
 	this.parent = parent;
 	this.x = parent.x;
@@ -11,6 +11,7 @@ function Animation(parent, spritesheetName, startAnim)
 	this.pause = false;
 	this.sens = 1;
 
+	this.actualAnim = startAnim;
 
 	this.width = this.subAnims[startAnim].spriteWidth;
 	this.height = this.subAnims[startAnim].spriteHeight;
@@ -22,19 +23,26 @@ function Animation(parent, spritesheetName, startAnim)
 	this.numberOfFrames = this.subAnims[startAnim].numberOfFrames;
 
 	renderingManager.addToDynamicObjects(this);
-	this.stop();
+	if(!startOnLaunch)
+		this.stop();
 }
 
 Animation.prototype.start = function(subAnimName) {
 	if(subAnimName === undefined)
 		return;
+	
+	if(this.actualAnim != subAnimName)
+	{
+		this.actualAnim = subAnimName;
+		this.spriteY = this.subAnims[subAnimName].line;
+		this.spriteX = 0;
+		this.dt = 0;
+		this.loop = this.subAnims[subAnimName].loop;
+		this.reverse = this.subAnims[subAnimName].reverse;
+		this.duration = this.subAnims[subAnimName].duration;
+	}
+	
 	this.pause = false;
-	this.spriteY = this.subAnims[subAnimName].line;
-	this.spriteX = 0;
-	this.dt = 0;
-	this.loop = this.subAnims[subAnimName].loop;
-	this.reverse = this.subAnims[subAnimName].reverse;
-	this.duration = this.subAnims[subAnimName].duration;
 };
 
 Animation.prototype.stop = function() {
