@@ -50,19 +50,20 @@
 		console.log(timer.state);
 		if(timer.state == 2 && !playmusique1)
 		{
+			MusiqueManager.musique3.stop();
 			MusiqueManager.musique2.play();
-			MusiqueManager.musique3.stop();	
+
+
+				
 			playmusique1= true;
 			playmusique2 = false;
 		}
 
 		if(timer.state == 3 && !playmusique2)
 		{
-			MusiqueManager.musique3.play();
 			MusiqueManager.musique2.stop();
+			MusiqueManager.musique3.play();
 			playmusique1 = false;
-
-
 			playmusique2= true;	
 		}
 

@@ -41,7 +41,7 @@ var Obstacle = function(config){
 	{
 		if (this.content == "pilz")
 		{
-			// charac.pilz++;
+			timer.changeTime(60000);
 		}
 		else if (this.content.substr(0,this.content.length-1) == "key")
 		{

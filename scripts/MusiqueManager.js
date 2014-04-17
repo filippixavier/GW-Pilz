@@ -3,19 +3,19 @@ var MusiqueManager = function()
 	var musique1 = new Howl({
 	  	urls: ['son/violon.mp3'],
 	  	loop: true,
-        volume: 1,
+        volume: 0.50,
 	  });
 
 	var musique2 = new Howl({
 		urls: ['son/piano.mp3'],
 		loop: true,
-		volume: 0.5,
+		volume: 0.25,
 	});
 
 	var musique3 = new Howl({
 		urls: ['son/orgue.mp3'],
 		loop: true,
-		volume: 0.20,
+		volume: 0.10,
 	});
 	
 	return {
