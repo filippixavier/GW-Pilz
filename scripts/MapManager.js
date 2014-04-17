@@ -162,71 +162,71 @@
 		{
 			if (objet.x + objet.width > (obstacles[title][i].x*100) && objet.x < (obstacles[title][i].x*100)+100 && objet.y + objet.height > (obstacles[title][i].y*100) && objet.y < (obstacles[title][i].y*100)+100)
 			{
-				if(direction.y == 0)
-				{
-				if(direction.x == -1)
-					objet.x = (obstacles[title][i].x*100) +100;
-				else if(direction.x == 1)
-					objet.x = (obstacles[title][i].x*100) - objet.width;
-				}
-				else
-				{
-					if(direction.x == 0)
-					{
-						if(direction.y == -1)
-							objet.y = (obstacles[title][i].y*100) +100;
-						else if(direction.y == 1)
-							objet.y = (obstacles[title][i].y*100) - objet.height;
-					}
-					if (direction.x == 1)
-					{
-						objet.y = (obstacles[title][i].y*100) - objet.height;
-						if(direction.x == 1)
-							objet.x ++;
-						else if(direction.x == -1)
-							objet.x --;
-					}
-					if (direction.x == 1)
-					{
-						objet.y = (obstacles[title][i].y*100) +100;
-						if(direction.x == 1)
-							objet.x ++;
-						else if(direction.x == -1)
-							objet.x --;
-					}
-				}
-				// if (objet.orientation == 0 )
+				// if(direction.y == 0)
 				// {
-				// 	objet.y = (obstacles[title][i].y*100) - objet.height;
-				// 	if(direction.x == 1)
-				// 		objet.x ++;
-				// 	else if(direction.x == -1)
-				// 		objet.x --;
-				// }
-				// else if (objet.orientation == 1 )
-				// {
-				// 	objet.x = (obstacles[title][i].x*100) - objet.width;
-				// 	if(direction.y == 1)
-				// 		objet.y ++;
-				// 	else if(direction.y == -1)
-				// 		objet.y --;
-				// }
-				// else if (objet.orientation == 2 )
-				// {
-				// 	objet.y = (obstacles[title][i].y*100) +100;
-				// 	if(direction.x == 1)
-				// 		objet.x ++;
-				// 	else if(direction.x == -1)
-				// 		objet.x --;
-				// }
-				// else if (objet.orientation ==  3)
-				// {
+				// if(direction.x == -1)
 				// 	objet.x = (obstacles[title][i].x*100) +100;
-				// 	if(direction.y == 1)
-				// 		objet.y ++;
-				// 	else if(direction.y == -1)
-				// 		objet.y --;
+				// else if(direction.x == 1)
+				// 	objet.x = (obstacles[title][i].x*100) - objet.width;
 				// }
+				// else
+				// {
+				// 	if(direction.x == 0)
+				// 	{
+				// 		if(direction.y == -1)
+				// 			objet.y = (obstacles[title][i].y*100) +100;
+				// 		else if(direction.y == 1)
+				// 			objet.y = (obstacles[title][i].y*100) - objet.height;
+				// 	}
+				// 	if (direction.x == 1)
+				// 	{
+				// 		objet.y = (obstacles[title][i].y*100) - objet.height;
+				// 		if(direction.x == 1)
+				// 			objet.x ++;
+				// 		else if(direction.x == -1)
+				// 			objet.x --;
+				// 	}
+				// 	if (direction.x == 1)
+				// 	{
+				// 		objet.y = (obstacles[title][i].y*100) +100;
+				// 		if(direction.x == 1)
+				// 			objet.x ++;
+				// 		else if(direction.x == -1)
+				// 			objet.x --;
+				// 	}
+				// }
+				if (objet.orientation == 2 )
+				{
+					objet.y = (obstacles[title][i].y*100) - objet.height;
+					if(direction.x == 1)
+						objet.x ++;
+					else if(direction.x == -1)
+						objet.x --;
+				}
+				else if (objet.orientation == 1 )
+				{
+					objet.x = (obstacles[title][i].x*100) - objet.width;
+					if(direction.y == 1)
+						objet.y ++;
+					else if(direction.y == -1)
+						objet.y --;
+				}
+				else if (objet.orientation == 0 )
+				{
+					objet.y = (obstacles[title][i].y*100) +100;
+					if(direction.x == 1)
+						objet.x ++;
+					else if(direction.x == -1)
+						objet.x --;
+				}
+				else if (objet.orientation ==  3)
+				{
+					objet.x = (obstacles[title][i].x*100) +100;
+					if(direction.y == 1)
+						objet.y ++;
+					else if(direction.y == -1)
+						objet.y --;
+				}
 
 				//bugs quand 2 touches appuyées
 			}
