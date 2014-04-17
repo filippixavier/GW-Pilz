@@ -14,7 +14,7 @@ var timer = function()
 
 	function start()
 	{
-		time = 243000;
+		time = 120000;
 	}
 	function update (dt) 
 	{

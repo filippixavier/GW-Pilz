@@ -65,6 +65,10 @@
 			playmusique1 = false;
 			playmusique2= true;	
 		}
+		if(timer.state == 1)
+		{
+		MusiqueManager.musique2.stop();
+		}
 
 		requestAnimationFrame(run);
 	}
