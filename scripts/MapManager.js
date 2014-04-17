@@ -1,4 +1,4 @@
-var MapManager = function ()
+﻿var MapManager = function ()
 {
 	var map = [];
 	var mapCollection = {};
@@ -68,12 +68,14 @@ var MapManager = function ()
 		console.log(nextMap);
 		loadMap(nextMap,nextPositionX,nextPositionY);
 		objet.teleport(nextPositionX,nextPositionY);
-
+		console.log(obstacles);
 	}
+
 
 	function loadMap(mapName,x,y)
 	{
-		renderingManager.clearStaticObjects();
+
+	renderingManager.clearStaticObjects();
 		if(mapCollection.hasOwnProperty(mapName))
 		{
 			map = mapCollection[mapName].map;
@@ -99,7 +101,11 @@ var MapManager = function ()
 				if (objet.x > (mapList[title].doors[i].x*100) && objet.x < (mapList[title].doors[i].x*100)+50 && objet.y > (mapList[title].doors[i].y*100) && objet.y < (mapList[title].doors[i].y*100)+50)
 				{
 					console.log('toto');
+<<<<<<< HEAD
 					switchMap(mapList[title].doors[i],objet);
+=======
+					switchMap(mapList[title].doors[i]);
+>>>>>>> af7c5de29263c7be636f2d0797b23091a668a919
 				}
 			// }
 		}

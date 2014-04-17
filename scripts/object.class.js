@@ -37,6 +37,7 @@ var Obstacle = function(config){
 	// 	// context.drawImage(this.img, 0, 0, this.currentFrame*this.width, 0, this.x, this.y, this.width, this.height);
 	// 	context.drawImage(this.img, this.x, this.y, this.width, this.height);
 	// }
+
 	this.action = function(charac)
 	{
 		if (this.content == "pilz")
