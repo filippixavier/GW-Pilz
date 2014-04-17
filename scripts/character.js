@@ -150,7 +150,7 @@ Character.prototype.protectTerritory = function(character) {
 };
 
 var direction = {x:0, y:0};
-
+var action = false;
 addEventListener("keydown", function(e)
 {
 	switch(e.keyCode)
@@ -167,13 +167,23 @@ addEventListener("keydown", function(e)
 		case 68:
 			direction.x = 1;
 			break;
+		case 32:
+			action = true;
+			break;
 	}
 });
 
 addEventListener("keyup", function(e)
 {
 	if(e.keyCode === 90 || e.keyCode === 83)
+	{
+		action = false;
 		direction.y = 0;
+	}
+
 	if(e.keyCode === 81 || e.keyCode === 68)
+	{
+		action = false;
 		direction.x = 0;
+	}
 });

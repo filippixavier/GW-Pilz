@@ -100,8 +100,9 @@
 				// console.log(objet.x > (mapList[title].doors[i].x*100), objet.x < (mapList[title].doors[i].x*100)+100, objet.y > (mapList[title].doors[i].y*100), objet.y < (mapList[title].doors[i].y*100)+100);
 				if (objet.x > (mapList[title].doors[i].x*100) && objet.x < (mapList[title].doors[i].x*100)+50 && objet.y > (mapList[title].doors[i].y*100) && objet.y < (mapList[title].doors[i].y*100)+50)
 				{
-					console.log('toto');
-					switchMap(mapList[title].doors[i],objet);
+					// afficher point d'exclamation
+					if (action == true)
+						switchMap(mapList[title].doors[i],objet);
 				}
 			// }
 		}
@@ -251,6 +252,8 @@
 				{
 					if (objet.orientation == (obstacles[title][i].facing+2)%4)
 					{
+						// afficher point d'exclamation
+						if (action == true)
 						obstacles[title][i].action(objet);
 					}
 				}
@@ -261,6 +264,8 @@
 				{
 					if (objet.orientation == (obstacles[title][i].facing+2)%4)
 					{
+						// afficher point d'exclamation
+						if (action == true)
 						obstacles[title][i].action(objet);
 					}
 				}
@@ -271,6 +276,8 @@
 				{
 					if (objet.orientation == (obstacles[title][i].facing+2)%4)
 					{
+						// afficher point d'exclamation
+						if (action == true)
 						obstacles[title][i].action(objet);
 					}
 				}
@@ -281,6 +288,8 @@
 				{
 					if (objet.orientation == (obstacles[title][i].facing+2)%4)
 					{
+						// afficher point d'exclamation
+						if (action == true)
 						obstacles[title][i].action(objet);
 					}
 				}
