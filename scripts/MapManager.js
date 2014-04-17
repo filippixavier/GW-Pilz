@@ -44,7 +44,11 @@ var MapManager = function ()
 
 		if(!mapCollection.hasOwnProperty(mapData.name))
 		{
-			mapCollection[mapData.name] = map;
+			mapCollection[title] = {};
+			mapCollection[title].map = map;
+			mapCollection[title].door = mapData.texture.door;
+			mapCollection[title].wall = mapData.texture.wall;
+			mapCollection[title].floor = mapData.texture.floor;
 		}
 
 		for ( var i in mapData.objects)
@@ -74,8 +78,7 @@ var MapManager = function ()
 		{
 			createMap(mapName);
 		}
-
-		renderingManager.drawMap(map, mapList[title].floor, mapList[title].wall);
+		renderingManager.drawMap(map, mapCollection[mapName].door, mapCollection[mapName].floor, mapCollection[mapName].wall);
 		//player.x = x;
 		//player.y = y;
 	}

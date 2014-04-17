@@ -3,8 +3,8 @@ var assets = {"mainchar":{"source":"./assets/PERSO DEF.png","datas":{"up":{"loop
 																	"down":{"loop":true,"reverse":true,"duration":1000,"numberOfFrames":3,"spriteWidth":64,"spriteHeight":64,"line":2},
 																	"right":{"loop":true,"reverse":true,"duration":1000,"numberOfFrames":3,"spriteWidth":64,"spriteHeight":64,"line":3}},
 																	
-				"floor":{"source":"./assets/PERSO DEF.png","datas":{"spriteWidth":100,"spriteHeight":100}},
-				"wall":{"source":"./assets/mur 2.png","datas":{"spriteWidth":100,"spriteHeight":100}},
+				"floor":{"source":"./assets/sol damier.png","datas":{"spriteWidth":100,"spriteHeight":100}},
+				"wall":{"source":"./assets/mur1.png","datas":{"spriteWidth":100,"spriteHeight":100}},
 				"lit1":{"source":"./assets/lit cote.png","datas":{"spriteWidth":100,"spriteHeight":100}},
 				"table1":{"source":"./assets/table1 vide.png","datas":{"spriteWidth":100,"spriteHeight":100}},
 				"litsang1":{"source":"./assets/lit sang cote.png","datas":{"spriteWidth":100,"spriteHeight":100}},
