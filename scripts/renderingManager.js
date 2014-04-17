@@ -7,7 +7,7 @@ var renderingManager = function ()
 
 	var floor, wall, door;
 
-	var assetsRendered = [], staticObjects = []; walls = [];
+	var assetsRendered = [], staticObjects = [];
 	
 	function init ()
 	{
@@ -28,7 +28,6 @@ var renderingManager = function ()
 
   		assetsRendered = [];
   		staticObjects = [];
-  		walls = [];
 	}
 
 	function drawMap (map, doorname, floorname, wallname)
@@ -36,44 +35,31 @@ var renderingManager = function ()
 		floor = AssetsManager.getImage(floorname);
 		wall = AssetsManager.getImage(wallname);
 		door = AssetsManager.getImage(doorname);
-		walls = [];
 		mapCtx.clearRect(0,0,mapCanvas.width,mapCanvas.height);
 		mapCtx.fillStyle = "#CCCCCC";
 
-		for (var line = map.length-1; line >=  0; line --)
+		for (var row = map.length-1; row >=  0; row --)
 		{
-			for (var row = map[line].length-1; row >= 0; row --)
+			for (var line = map[row].length-1; line >= 0; line --)
 			{
-				if (map[line][row] == 1)
+				if (map[row][line] == 1)
 				{
-					mapCtx.drawImage(floor, line*100, row*100, 100, 100);
+					mapCtx.drawImage(floor, row*100, line*100, 100, 100);
 				}
-				else if (map[line][row] == 0)
+				else if (map[row][line] == 0)
 				{
 					mapCtx.fillStyle = "#000000";
-					mapCtx.fillRect(line*100,row*100,100,100);
+					mapCtx.fillRect(row*100,line*100,100,100);
 				}
-				else if (map[line][row] == 2)
+				else if (map[row][line] == 2)
 				{
 					mapCtx.fillStyle = "#f00";
-					mapCtx.fillRect(line*100,row*100,100,100);
+					mapCtx.fillRect(row*100,line*100,100,100);
 				}
-			}
-		}
-	}
-
-	function getWallsPosition (map) {
-		var previous = false;
-		for(var line = map[0].length-1; line >= 0; line --)
-		{
-			for(var row = map.length-1; length-1 >= 0; row--)
-			{
-				if(map[row][line] === 0)
+				else if (map[row][line] === 3)
 				{
-					previous = true;
+					mapCtx.drawImage(wall, row*100, line*100, 100, 100);
 				}
-
-				if(map[row][line] === 1)
 			}
 		}
 	}

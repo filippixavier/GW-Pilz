@@ -42,6 +42,8 @@ var MapManager = function ()
 			map[mapData.doors[i].x][mapData.doors[i].y] = 2;
 		}
 
+		getWallsPosition();
+
 		if(!mapCollection.hasOwnProperty(mapData.name))
 		{
 			mapCollection[title] = {};
@@ -110,55 +112,38 @@ var MapManager = function ()
 		pos.h = ((objet.y + objet.height)/ 100)|0 ;
 		// console.log(pos);
 
-		if (map.length-1 < pos.w)
-		{
-			objet.x -= objet.x - ((pos.w - 1) * 100) - 36 +1;
-		}
-		if (objet.x < 0)
-		{
-			objet.x -= objet.x -1;
-		}
-		if (map[0].length-1 < pos.h)
-		{
-			objet.y -= objet.y - ((pos.h - 1) * 100) - 36 +1;
-		}
-		if (objet.y < 0)
-		{
-			objet.y -= objet.y -1;
-		}
-
 		pos.w = ((objet.x + objet.width)/ 100)|0 ;
 		pos.h = ((objet.y + objet.height)/ 100)|0 ;
 
 		if (pos.x >= 0 && pos.y >= 0 && pos.w <= map.length && pos.h <= map[0].length)
 		{
-			if ( map[pos.w][pos.h] == 0)
+			if ( map[pos.w][pos.h] == 0 || map[pos.w][pos.h] == 3)
 			{
-				if (map[pos.w][pos.y] == 0)
+				if (map[pos.w][pos.y] == 0 || map[pos.w][pos.y] == 3)
 				{
 					objet.x -= objet.x - ((pos.x) * 100) - 36 +1;
 				}
-				if (map[pos.x][pos.h] == 0)
+				if (map[pos.x][pos.h] == 0 || map[pos.x][pos.h] == 3)
 				{
 					objet.y -= objet.y - ((pos.y) * 100) - 36 +1;
 				}
-				if (map[pos.x][pos.h] != 0 && map[pos.w][pos.y] != 0)
+				if (map[pos.x][pos.h] != 0 && map[pos.x][pos.h] != 0)
 				{
 					var xy = { x : objet.x - ((pos.x) * 100) - 36 +1, y : objet.y - ((pos.y) * 100) - 36 +1};
 					return xy;
 				}
 			}
-			if ( map[pos.x][pos.y] == 0)
+			if ( map[pos.x][pos.y] == 0 || map[pos.x][pos.y] == 3)
 			{
-				if (map[pos.w][pos.y] == 0)
+				if (map[pos.w][pos.y] == 0 || map[pos.w][pos.y] == 3)
 				{
 					objet.y -= objet.y - ((pos.y+1) * 100) - 1;
 				}
-				if (map[pos.x][pos.h] == 0)
+				if (map[pos.x][pos.h] == 0 || map[pos.x][pos.h] == 3)
 				{
 					objet.x -= objet.x - ((pos.x+1) * 100) - 1;
 				}
-				if (map[pos.x][pos.h] != 0 && map[pos.w][pos.y] != 0)
+				if (map[pos.x][pos.h] != 0 && map[pos.x][pos.h] != 0)
 				{
 					var xy = { x : objet.x - ((pos.x+1) * 100) - 1, y : objet.y - ((pos.y+1) * 100) - 1};
 					return xy;
@@ -166,6 +151,7 @@ var MapManager = function ()
 			}
 		}
 	}
+
 	function collideObstacles(objet)
 	{
 		for ( var i in obstacles[title])
@@ -247,6 +233,24 @@ var MapManager = function ()
 		}
 	}
 
+	function getWallsPosition () {
+		var previous = false;
+		console.log(map);
+
+		for (var x = map.length - 1; x >= 0; x--) {
+			for(var y = 0; y < map[0].length; y++)
+			{
+				if(map[x][y] === 0)
+					previous = true;
+				if((map[x][y] === 1 || map[x][y] === 2)&& previous)
+				{
+					previous = false;
+					map[x][y-1] = 3;
+				}
+			}
+		};
+
+	}
 	return {
 		init: init,
 		loadMap : loadMap,
