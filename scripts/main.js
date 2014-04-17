@@ -6,10 +6,13 @@
     var player, t1, t2, dt;
 	function init () {
 		AssetsManager.init()
-		
+		MusiqueManager.musique1.play();
+		//MusiqueManager.musique2.play();
+		//MusiqueManager.musique3.play();
 		MapManager.init();
 		renderingManager.init();
 		requestAnimationFrame(loadAssets);
+
 	}
 
 	function loadAssets()
@@ -38,6 +41,16 @@
 		player.move(direction, dt);
 		player.render(dt);
 		renderingManager.render();
+		if(timer.state == 2)
+		{
+			MusiqueManager.musique2.play();	
+		}
+
+		if(timer.state == 3)
+		{
+			MusiqueManager.musique3.play();	
+		}
+
 		requestAnimationFrame(run);
 	}
 
