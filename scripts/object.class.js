@@ -2,6 +2,7 @@ var Obstacle = function(config){
 	this.x = config.x;
 	this.y = config.y;
 	this.content = config.content;
+	this.facing = config.facing;
 	this.img = AssetsManager.getImage(config.type);
 	// this.width = this.img.width;
 	// this.height = this.img.height;

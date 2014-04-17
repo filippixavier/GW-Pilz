@@ -30,17 +30,28 @@ Character.prototype.move = function(direction, dt) {
 	this.x += direction.x * this.speed * dt;
 	this.y += direction.y * this.speed * dt;
 
-	if(direction.x === 1)
-		this.orientation = 1;
-	else
-		this.orientation = 3;
-	if(direction.y === -1)
-		this.orientation = 0;
-	else
-		this.orientation = 2;
-
+	if (direction.x != 0 || direction.y != 0)
+	{
+		if(direction.x === 1)
+		{
+			this.orientation = 1;
+		}
+		else if(direction.x === -1)
+		{
+			this.orientation = 3;
+		}
+		if(direction.y === -1)
+		{
+			this.orientation = 0;
+		}
+		else if(direction.y === 1)
+		{
+			this.orientation = 2;
+		}
+	}
 	if(this.orientation !== previousOrientation)
 	{
+		previousOrientation = this.orientation;
 		//this.anim.changeOrientation(this.orientation);
 	}
 	else
@@ -60,12 +71,23 @@ Character.prototype.move = function(direction, dt) {
 			case 0:
 				sens = "up";
 				break;
+			// case 1:
+			// 	sens = "right";
+			// 	break;
+			// case 2:
+			// 	sens = "down";
+			// 	break;
+			// case 3:
+			// 	sens = "left";
+			// 	break;
 		}
 		this.anim.start(sens);
 	}
+	console.log(this.orientation, direction);
+
 	MapManager.collision(this);
 	MapManager.collideDoor(this);
-
+	MapManager.checkFacingObstacles(this);
 	MapManager.collideObstacles(this, direction);
 
 
