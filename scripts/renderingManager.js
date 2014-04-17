@@ -79,7 +79,7 @@ var renderingManager = function ()
 			}
 			else
 			{
-				dynamicCtx.drawImage(assetsRendered[i].spritesheet, assetsRendered[i].spriteX, assetsRendered[i].spriteY , assetsRendered[i].width, assetsRendered[i].height, assetsRendered[i].x, assetsRendered[i].y, assetsRendered[i].width, assetsRendered[i].height);
+				dynamicCtx.drawImage(assetsRendered[i].spritesheet, assetsRendered[i].spriteX, assetsRendered[i].spriteY*assetsRendered[i].height , assetsRendered[i].width, assetsRendered[i].height, assetsRendered[i].x, assetsRendered[i].y, assetsRendered[i].width, assetsRendered[i].height);
 			}
 		}
 

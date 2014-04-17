@@ -13,7 +13,6 @@ function Character(x,y,speed, height, width, type)
 	
 	this.event = new EventListener();
 	this.event.create("move");
-	// player.event.subscribe("move", clb);
 	
 	this.sightRadius = -1;
 	this.angleRadius = -1;
@@ -71,20 +70,18 @@ Character.prototype.move = function(direction, dt) {
 			case 0:
 				sens = "up";
 				break;
-			// case 1:
-			// 	sens = "right";
-			// 	break;
-			// case 2:
-			// 	sens = "down";
-			// 	break;
-			// case 3:
-			// 	sens = "left";
-			// 	break;
+			case 1:
+				sens = "right";
+				break;
+			case 2:
+				sens = "down";
+				break;
+			case 3:
+				sens = "left";
+				break;
 		}
 		this.anim.start(sens);
 	}
-	console.log(this.orientation, direction);
-
 	MapManager.collision(this);
 	MapManager.collideDoor(this);
 	MapManager.checkFacingObstacles(this);
