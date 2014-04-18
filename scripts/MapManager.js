@@ -159,6 +159,12 @@
 				if (objet.x > (mapList[title].doors[i].x*100) && objet.x < (mapList[title].doors[i].x*100)+50 && objet.y > (mapList[title].doors[i].y*100) && objet.y < (mapList[title].doors[i].y*100)+50)
 				{
 					// afficher point d'exclamation
+
+					renderingManager.drawing = true;
+					renderingManager.drawX = (objet.x-10);
+					renderingManager.drawY = (objet.y-70);
+					renderingManager.drawExclamPoint();
+
 					if (action == true)
 					{
 						switchMap(mapList[title].doors[i],objet);
@@ -299,6 +305,10 @@
 				{
 					if (objet.orientation == (obstacles[title][i].facing+2)%4)
 					{
+						renderingManager.drawing = true;
+						renderingManager.drawX = (objet.x-10);
+						renderingManager.drawY = (objet.y-70);
+						renderingManager.drawExclamPoint();
 						// afficher point d'exclamation
 						if (action == true)
 						obstacles[title][i].action(objet);
@@ -311,6 +321,10 @@
 				{
 					if (objet.orientation == (obstacles[title][i].facing+2)%4)
 					{
+						renderingManager.drawing = true;
+						renderingManager.drawX = (objet.x-10);
+						renderingManager.drawY = (objet.y-70);
+						renderingManager.drawExclamPoint();
 						// afficher point d'exclamation
 						if (action == true)
 						obstacles[title][i].action(objet);
@@ -323,6 +337,10 @@
 				{
 					if (objet.orientation == (obstacles[title][i].facing+2)%4)
 					{
+						renderingManager.drawing = true;
+						renderingManager.drawX = (objet.x-10);
+						renderingManager.drawY = (objet.y-70);
+						renderingManager.drawExclamPoint();
 						// afficher point d'exclamation
 						if (action == true)
 						obstacles[title][i].action(objet);
@@ -335,6 +353,10 @@
 				{
 					if (objet.orientation == (obstacles[title][i].facing+2)%4)
 					{
+						renderingManager.drawing = true;
+						renderingManager.drawX = (objet.x-10);
+						renderingManager.drawY = (objet.y-70);
+						renderingManager.drawExclamPoint();
 						// afficher point d'exclamation
 						if (action == true)
 						obstacles[title][i].action(objet);

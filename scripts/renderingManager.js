@@ -8,8 +8,10 @@ var renderingManager = function ()
 	var floor, wall, door;
 
 	var assetsRendered = [], staticObjects = [], debug = [];
-
+	var exclamP;
 	var t = "0";
+	var drawing = false;
+	var drawX, drawY;
 	
 	function init ()
 	{
@@ -35,6 +37,7 @@ var renderingManager = function ()
 
   		assetsRendered = [];
   		staticObjects = [];
+  		exclamP = AssetsManager.getImage('exclam');
 	}
 
 	function drawMap (map, doorname, floorname, wallname)
@@ -102,6 +105,11 @@ var renderingManager = function ()
 			dynamicCtx.fillRect(debug[i].x, debug[i].y, debug[i].width, debug[i].height);
 		}
 
+		if (drawing)
+		{
+			drawing = false;
+			drawExclamPoint();
+		}
 		temp = timer.time;
 		if(temp !== t)
 		{
@@ -169,6 +177,11 @@ var renderingManager = function ()
 		cameraX = x - (cameraCanvas.width/2);
 		cameraY = y - (cameraCanvas.height/2);
 	}
+	function drawExclamPoint() {
+		dynamicCtx.drawImage(exclamP, drawX, drawY,100,100);
+		// dynamicCtx.fillStyle = "#FFFFFF";
+		// dynamicCtx.fillRect(drawX,drawY,100,100);
+	}
 
 	return {
 		drawMap : drawMap,
@@ -181,6 +194,16 @@ var renderingManager = function ()
 		removeFromDebug: removeFromDebug,
 		removeFromDynamicObjects: removeFromDynamicObjects,
 		follow: follow,
+		drawExclamPoint : drawExclamPoint,
+		set drawing(x){
+			drawing = x;
+		},
+		set drawX(x){
+			drawX = x;
+		},
+		set drawY(y){
+			drawY = y;
+		},
 		get cameraX(){
 			return cameraX;
 		},
