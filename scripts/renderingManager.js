@@ -10,6 +10,7 @@ var renderingManager = function ()
 	var assetsRendered = [], staticObjects = [], debug = [];
 	var exclamP;
 	var t = "0";
+	var text = "", textX = 0, textY = 0, mustRewrite = false;
 	var drawing = false;
 	var drawX, drawY;
 	// var menu, aide;
@@ -138,13 +139,14 @@ var renderingManager = function ()
 			drawExclamPoint();
 		}
 		temp = timer.time;
-		if(temp !== t)
+		if(temp !== t || mustRewrite)
 		{
 			textCtx.clearRect(0,0,textCanvas.width,textCanvas.height);
 			t = temp;
 			textCtx.fillStyle = "#FF0000";
 			textCtx.font = "50px Verdana";
 			textCtx.fillText(t,200,100);
+			textCtx.fillText(text, textX, textY);
 		}
 
 
@@ -226,6 +228,15 @@ var renderingManager = function ()
 		// dynamicCtx.fillRect(drawX,drawY,100,100);
 	}
 
+	function writeText(atext, x, y)
+	{
+		console.log(atext);
+		text = atext;
+		textX = x;
+		textY = y;
+		mustRewrite = true;
+	}
+
 	return {
 		drawMap : drawMap,
 		init : init,
@@ -263,6 +274,7 @@ var renderingManager = function ()
 		get menuImageStatus()
 		{
 			return menuImageStatus;
-		}
+		},
+		writeText: writeText
 	};
 }();

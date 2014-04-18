@@ -53,6 +53,9 @@ var timer = function()
 		{
 			state = 1;
 		}
+
+		if(time == 0)
+			state = 0;
 		if(state != previous)
 		{
 			console.log(state);

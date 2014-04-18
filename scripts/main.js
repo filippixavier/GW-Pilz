@@ -78,9 +78,6 @@
 		
 		timer.update(dt);
 		//}
-		renderingManager.render(game_State);
-
-
 		if(timer.state == 2 && !playmusique1)
 		{
 			MusiqueManager.musique3.stop();
@@ -101,10 +98,15 @@
 		}
 		if(timer.state == 1)
 		{
-		MusiqueManager.musique2.stop();
+			MusiqueManager.musique2.stop();
 		}
-
-		requestAnimationFrame(run);
+		console.log(timer.state);
+		
+		if(!(timer.state === 0))
+			requestAnimationFrame(run);
+		else
+			renderingManager.writeText("Game Over", 500, 500);
+		renderingManager.render(game_State);
 	}
 
 	function addEnemies (enemy,n) {
