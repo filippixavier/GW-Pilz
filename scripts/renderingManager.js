@@ -32,6 +32,12 @@ var renderingManager = function ()
   		textCanvas.height = 720;
   		textCanvas.width = 1080;
   		textCtx = textCanvas.getContext('2d');
+  		foreground = new Image();
+		foreground.src = "assets/Stade_01.png";
+		foreground2 = new Image();
+		foreground2.src = "assets/Stade_02.png";
+		foreground3 = new Image();
+		foreground3.src = "assets/Stade_03.png";
 
   		assetsRendered = [];
   		staticObjects = [];
@@ -112,8 +118,23 @@ var renderingManager = function ()
 			textCtx.fillText(t,200,100);
 		}
 
+
 		cameraCtx.drawImage(mapCanvas, cameraX, cameraY, cameraCanvas.width, cameraCanvas.height, 0, 0, cameraCanvas.width, cameraCanvas.height);
 		cameraCtx.drawImage(dynamicCanvas, cameraX, cameraY, cameraCanvas.width, cameraCanvas.height, 0, 0, cameraCanvas.width, cameraCanvas.height);
+		cameraCtx.drawImage(textCanvas, 0,0,textCanvas.width,textCanvas.height);
+		
+		if(timer.state == 3)
+		{
+			cameraCtx.drawImage(foreground3, 0,0);
+		}
+		if(timer.state == 2)
+		{
+			cameraCtx.drawImage(foreground2, 0,0);
+		}
+		else
+		{
+			cameraCtx.drawImage(foreground, 0,0);
+		}
 		cameraCtx.drawImage(textCanvas, 0,0,textCanvas.width,textCanvas.height);
 		//cameraCtx.fillRect ( game.perso.x , game.perso.y , game.perso.w , game.perso.h );
 	}
