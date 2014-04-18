@@ -1,0 +1,19 @@
+#canvas
+{
+	padding: 25px;
+}
+
+#bordurejeux
+{
+	margin-left: 14%;
+	margin-right: 14%;
+	margin-top: 1%;
+	margin-bottom: 1%;
+	border-radius: 20px;
+	background-color: #111111;
+}
+body 
+{
+	background-image:url(assets/sol_beton.png);
+
+}
