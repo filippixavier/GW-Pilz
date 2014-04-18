@@ -40,7 +40,8 @@ function Character(x,y,speed, height, width, type, orientation)
 	
 	this.event = new EventListener();
 	this.event.create("move");
-	
+	this.event.create("die");
+
 	this.sightRadius = -1;
 	this.angleRadius = -1;
 	this.territoryCenter = {x: 0, y: 0};
@@ -158,13 +159,13 @@ Character.prototype.protectTerritory = function(character, dt) {
 
 		if(x*x + y*y <= this.sightRadius*this.sightRadius)
 		{
-			if(character.x + character.width < this.x)
+			if(character.x+10 < this.x)
 				dx = -1;
-			else if(character.x > this.x + this.width)
+			else if(character.x > this.x +10)
 				dx = 1;
-			if (character.y + character.height < this.y)
+			if (character.y+10 < this.y)
 				dy = -1;
-			else if(character.y > this.y + this.height)
+			else if(character.y > this.y+10)
 				dy = 1;
 		}
 		else
@@ -177,6 +178,11 @@ Character.prototype.protectTerritory = function(character, dt) {
 				dy = -1;
 			else if(this.territoryCenter.y > this.y + this.height)
 				dy = 1;
+		}
+
+		if(x*x + y*y <= (this.width*this.width)/4)
+		{
+			this.event.emit("die", this);
 		}
 	}
 	this.move({x:dx, y:dy}, dt);
