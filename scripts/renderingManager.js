@@ -1,4 +1,4 @@
-var renderingManager = function (game_State)
+var renderingManager = function ()
 {
 	window.requestAnimationFrame = window.requestAnimationFrame || window.mozRequestAnimationFrame ||
                       window.webkitRequestAnimationFrame || window.msRequestAnimationFrame;
@@ -8,9 +8,10 @@ var renderingManager = function (game_State)
 	var floor, wall, door;
 
 	var assetsRendered = [], staticObjects = [], debug = [];
-
+	var exclamP;
 	var t = "0";
-
+	var drawing = false;
+	var drawX, drawY;
 	
 	function init ()
 	{
@@ -39,24 +40,25 @@ var renderingManager = function (game_State)
 		foreground2.src = "assets/Stade_02.png";
 		foreground3 = new Image();
 		foreground3.src = "assets/Stade_03.png";
-		menu = new Image();
-		menu.src = "assets/menu2.png";
-	if(game_State == "menu")
-	{
-		menuRender();
-	}
 
   		assetsRendered = [];
   		staticObjects = [];
+  		exclamP = AssetsManager.getImage('exclam');
 	}
 
 	function drawMap (map, doorname, floorname, wallname)
 	{
+		var floorD, wallD, doorD;
+		floorD = AssetsManager.getAnimData(floorname);
+		wallD = AssetsManager.getAnimData(wallname);
+		doorD = AssetsManager.getAnimData(doorname);
 		floor = AssetsManager.getImage(floorname);
 		wall = AssetsManager.getImage(wallname);
 		door = AssetsManager.getImage(doorname);
 		mapCtx.clearRect(0,0,mapCanvas.width,mapCanvas.height);
 		mapCtx.fillStyle = "#CCCCCC";
+
+		console.log(floorD);
 
 		for (var row = map.length-1; row >=  0; row --)
 		{
@@ -64,7 +66,7 @@ var renderingManager = function (game_State)
 			{
 				if (map[row][line] == 1)
 				{
-					mapCtx.drawImage(floor, row*100, line*100, 100, 100);
+					mapCtx.drawImage(floor, floorD.spriteX*floorD.spriteWidth, floorD.spriteY*floorD.spriteHeight, floorD.spriteWidth, floorD.spriteHeight, row*100, line*100, 100, 100);
 				}
 				else if (map[row][line] == 0)
 				{
@@ -78,13 +80,13 @@ var renderingManager = function (game_State)
 				}
 				else if (map[row][line] === 3)
 				{
-					mapCtx.drawImage(wall, row*100, line*100, 100, 100);
+					mapCtx.drawImage(wall,wallD.spriteX*wallD.spriteWidth, wallD.spriteY*wallD.spriteHeight, wallD.spriteWidth, wallD.spriteHeight, row*100, line*100, 100, 100);
 				}
 			}
 		}
 
 		for (var i = staticObjects.length - 1; i >= 0; i--) {
-			mapCtx.drawImage(staticObjects[i].img, staticObjects[i].posiX*staticObjects[i].width, staticObjects[i].posiY*staticObjects[i].height, staticObjects[i].width, staticObjects[i].height,staticObjects[i].x*staticObjects[i].width, staticObjects[i].y*staticObjects[i].height, staticObjects[i].width, staticObjects[i].height);
+			mapCtx.drawImage(staticObjects[i].img, staticObjects[i].spriteX*staticObjects[i].width, staticObjects[i].spriteY*staticObjects[i].height, staticObjects[i].width, staticObjects[i].height,staticObjects[i].x*staticObjects[i].width, staticObjects[i].y*staticObjects[i].height, staticObjects[i].width, staticObjects[i].height);
 		};
 	}
 
@@ -101,7 +103,7 @@ var renderingManager = function (game_State)
 		{
 			if(assetsRendered[i].spritesheet === undefined)
 			{
-				//cameraCtx.fillRect (assetsRendered[i].posiX - cameraX, assetsRendered[i].posiY - cameraY, assetsRendered[i].width, assetsRendered[i].height);
+				//cameraCtx.fillRect (assetsRendered[i].spriteX - cameraX, assetsRendered[i].spriteY - cameraY, assetsRendered[i].width, assetsRendered[i].height);
 			}
 			else
 			{
@@ -115,6 +117,11 @@ var renderingManager = function (game_State)
 			dynamicCtx.fillRect(debug[i].x, debug[i].y, debug[i].width, debug[i].height);
 		}
 
+		if (drawing)
+		{
+			drawing = false;
+			drawExclamPoint();
+		}
 		temp = timer.time;
 		if(temp !== t)
 		{
@@ -151,14 +158,14 @@ var renderingManager = function (game_State)
 		staticObjects = [];
 	}
 
-	function addToStaticObjects (img, x, y, width, height, posiX, posiY) 
+	function addToStaticObjects (img, x, y, width, height, spriteX, spriteY) 
 	{
 		var obj = {
 			img: img,
 			x: x,
 			y: y,
-			posiX: posiX || 0,
-			posiY: posiY || 0,
+			spriteX: spriteX || 0,
+			spriteY: spriteY || 0,
 			width: width,
 			height: height
 		}
@@ -198,10 +205,10 @@ var renderingManager = function (game_State)
 		cameraX = x - (cameraCanvas.width/2);
 		cameraY = y - (cameraCanvas.height/2);
 	}
-
-	function menuRender () 
-	{
-		cameraCtx.drawImage(menu, 0,0);
+	function drawExclamPoint() {
+		dynamicCtx.drawImage(exclamP, drawX, drawY,100,100);
+		// dynamicCtx.fillStyle = "#FFFFFF";
+		// dynamicCtx.fillRect(drawX,drawY,100,100);
 	}
 
 	return {
@@ -215,6 +222,16 @@ var renderingManager = function (game_State)
 		removeFromDebug: removeFromDebug,
 		removeFromDynamicObjects: removeFromDynamicObjects,
 		follow: follow,
+		drawExclamPoint : drawExclamPoint,
+		set drawing(x){
+			drawing = x;
+		},
+		set drawX(x){
+			drawX = x;
+		},
+		set drawY(y){
+			drawY = y;
+		},
 		get cameraX(){
 			return cameraX;
 		},

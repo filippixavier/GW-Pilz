@@ -159,6 +159,12 @@
 				if (objet.x > (mapList[title].doors[i].x*100) && objet.x < (mapList[title].doors[i].x*100)+50 && objet.y > (mapList[title].doors[i].y*100) && objet.y < (mapList[title].doors[i].y*100)+50)
 				{
 					// afficher point d'exclamation
+
+					renderingManager.drawing = true;
+					renderingManager.drawX = (objet.x-10);
+					renderingManager.drawY = (objet.y-70);
+					renderingManager.drawExclamPoint();
+
 					if (action == true)
 					{
 						switchMap(mapList[title].doors[i],objet);
@@ -218,7 +224,7 @@
 
 	function collideObstacles(objet)
 	{
-		var insideX=0, insideY=0,posiX, posiY, obs = obstacles[title];
+		var insideX=0, insideY=0,posiX, posiY, obs = obstacles[title], width, height;
 		for ( var i in obs)
 		{
 			posiX = obs[i].x*100;
@@ -228,60 +234,48 @@
 				&& objet.y + objet.height > posiY 
 				&& objet.y < posiY+100)
 			{
-				// if (objet.orientation == 2 )
-				// {
-				// 	objet.y = posiY - objet.height;
-				// 	if(direction.x == 1)
-				// 		objet.x ++;
-				// 	else if(direction.x == -1)
-				// 		objet.x --;
-				// }
-				// else if (objet.orientation == 1 )
-				// {
-				// 	objet.x = posiX - objet.width;
-				// 	if(direction.y == 1)
-				// 		objet.y ++;
-				// 	else if(direction.y == -1)
-				// 		objet.y --;
-				// }
-				// else if (objet.orientation == 0 )
-				// {
-				// 	objet.y = posiY +100;
-				// 	if(direction.x == 1)
-				// 		objet.x ++;
-				// 	else if(direction.x == -1)
-				// 		objet.x --;
-				// }
-				// else if (objet.orientation ==  3)
-				// {
-				// 	objet.x = posiX +100;
-				// 	if(direction.y == 1)
-				// 		objet.y ++;
-				// 	else if(direction.y == -1)
-				// 		objet.y --;
-				// }
 				insideX = posiX - objet.x;
 				insideY = posiY - objet.y;
 
+				width = objet.width;
+				height = objet.height;
+
+				if(posiX < objet.x)
+				{
+					insideX *= -1;
+					width = 100;
+				}
+				if(posiY < objet.y)
+				{
+					insideY *= -1;
+					height = 100;
+				}
+
 				if(insideX > 0)
-				{
-					objet.x -= (objet.width - insideX);
-				}
+					insideX = (width - insideX);
 				else
-				{
-					objet.x += (100 - insideX);
-				}
+					insideX = (100 - insideX);
 				if(insideY > 0)
+					insideY = (height - insideY);
+				else
+					insideY = (100 - insideY);
+
+				console.log(insideX, insideY);
+
+				if(insideY <= insideX)
 				{
-					objet.y -= (objet.height - insideY);
+					insideX = 0;
 				}
 				else
 				{
-					objet.y += (100 - insideY);
+					insideY = 0;
 				}
+
+				console.log(insideX, insideY);
 
 			}
 		}
+		return {x: insideX, y: insideY};
 	}
 	function checkFacingObstacles (objet)
 	{
@@ -299,6 +293,10 @@
 				{
 					if (objet.orientation == (obstacles[title][i].facing+2)%4)
 					{
+						renderingManager.drawing = true;
+						renderingManager.drawX = (objet.x-10);
+						renderingManager.drawY = (objet.y-70);
+						renderingManager.drawExclamPoint();
 						// afficher point d'exclamation
 						if (action == true)
 						obstacles[title][i].action(objet);
@@ -311,6 +309,10 @@
 				{
 					if (objet.orientation == (obstacles[title][i].facing+2)%4)
 					{
+						renderingManager.drawing = true;
+						renderingManager.drawX = (objet.x-10);
+						renderingManager.drawY = (objet.y-70);
+						renderingManager.drawExclamPoint();
 						// afficher point d'exclamation
 						if (action == true)
 						obstacles[title][i].action(objet);
@@ -323,6 +325,10 @@
 				{
 					if (objet.orientation == (obstacles[title][i].facing+2)%4)
 					{
+						renderingManager.drawing = true;
+						renderingManager.drawX = (objet.x-10);
+						renderingManager.drawY = (objet.y-70);
+						renderingManager.drawExclamPoint();
 						// afficher point d'exclamation
 						if (action == true)
 						obstacles[title][i].action(objet);
@@ -335,6 +341,10 @@
 				{
 					if (objet.orientation == (obstacles[title][i].facing+2)%4)
 					{
+						renderingManager.drawing = true;
+						renderingManager.drawX = (objet.x-10);
+						renderingManager.drawY = (objet.y-70);
+						renderingManager.drawExclamPoint();
 						// afficher point d'exclamation
 						if (action == true)
 						obstacles[title][i].action(objet);

@@ -52,6 +52,7 @@ function Character(x,y,speed, height, width, type, orientation)
 
 Character.prototype.move = function(direction, dt) {
 	var previousOrientation = this.orientation;
+	var correction;
 
 	this.x += direction.x * this.speed * dt;
 	this.y += direction.y * this.speed * dt;
@@ -109,9 +110,11 @@ Character.prototype.move = function(direction, dt) {
 	MapManager.collision(this);
 	MapManager.collideDoor(this);
 	MapManager.checkFacingObstacles(this);
-	MapManager.collideObstacles(this, direction);
-
-
+	correction = MapManager.collideObstacles(this, direction);
+	
+	this.x += -direction.x * correction.x;
+	this.y += -direction.y * correction.y;
+	
 	this.event.emit("move", this.x, this.y);
 
 };
