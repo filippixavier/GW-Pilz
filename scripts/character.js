@@ -138,14 +138,15 @@ Character.prototype.delete = function() {
 		renderingManager.removeFromDebug(this.anim);
 };
 
-Character.prototype.setIa = function(tradius) {
+Character.prototype.setIA = function(tradius, sradius) {
 	this.territoryCenter.x = this.x;
-	this.territoryCenter.x = this.x;
+	this.territoryCenter.y = this.y;
 	this.territoryRadius = tradius || 200;
+	this.sightRadius = sradius || this.territoryRadius;
 	this.isIA = true;
 };
 
-Character.prototype.protectTerritory = function(character) {
+Character.prototype.protectTerritory = function(character, dt) {
 	var x,y,dx=0,dy=0;
 	if(this.isIA)
 	{
@@ -175,6 +176,7 @@ Character.prototype.protectTerritory = function(character) {
 				dy = 1;
 		}
 	}
+	this.move({x:dx, y:dy}, dt);
 };
 
 var direction = {x:0, y:0};

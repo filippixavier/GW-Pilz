@@ -45,6 +45,7 @@
 
 		player.move(direction, dt);
 		player.render(dt);
+		updateEnemies();
 		renderingManager.render();
 		timer.update(dt);
 		if(timer.state == 2 && !playmusique1)
@@ -79,6 +80,16 @@
 
 	function clearEnemies (n) {
 		enemies[n] = [];
+	}
+
+	function updateEnemies () {
+		for(var n = 1; n < 4; n++)
+		{
+			for (var i = enemies["n"+n].length - 1; i >= 0; i--) {
+				enemies["n"+n][i].protectTerritory(player, dt);
+				enemies["n"+n][i].render(dt);
+			};
+		}
 	}
 
 
