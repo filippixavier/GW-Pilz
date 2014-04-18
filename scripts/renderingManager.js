@@ -58,8 +58,6 @@ var renderingManager = function ()
 		mapCtx.clearRect(0,0,mapCanvas.width,mapCanvas.height);
 		mapCtx.fillStyle = "#CCCCCC";
 
-		console.log(floorD);
-
 		for (var row = map.length-1; row >=  0; row --)
 		{
 			for (var line = map[row].length-1; line >= 0; line --)

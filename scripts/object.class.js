@@ -53,6 +53,6 @@ var Obstacle = function(config){
 
 	this.awake = function()
 	{
-		renderingManager.addToStaticObjects(this.img,this.x,this.y,this.width,this.height);
+		renderingManager.addToStaticObjects(this.img,this.x,this.y,this.width,this.height, this.animData.spriteX, this.animData.spriteY);
 	}
 }
