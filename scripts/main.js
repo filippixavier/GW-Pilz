@@ -3,17 +3,37 @@
 	window.requestAnimationFrame = window.requestAnimationFrame || window.mozRequestAnimationFrame ||
                               window.webkitRequestAnimationFrame || window.msRequestAnimationFrame;
 
-    var player, t1, t2, dt,playmusique1,playmusique2, enemies = {n1:[], n2:[], n3:[]};
+    var player, t1, t2, dt,playmusique1,playmusique2, enemies = {n1:[], n2:[], n3:[]}, state = "menu";
 
-		
-	function init () {
+	function initMenu () {
 		AssetsManager.init()
+		// timer.start();
+		// MusiqueManager.musique1.play();
+		//MusiqueManager.musique2.play();
+		//MusiqueManager.musique3.play();
+		// MapManager.init();
+		renderingManager.init();
+		renderingManager.drawMenu();
+		// playmusique1 = playmusique2 = false;
+		// requestAnimationFrame(loadAssets);
+		if (state == "play")
+		{
+			init();
+		}
+		else
+		{
+			requestAnimationFrame(initMenu);
+		}
+		// init();
+	}
+	function init () {
+		// AssetsManager.init()
 		timer.start();
 		MusiqueManager.musique1.play();
 		//MusiqueManager.musique2.play();
 		//MusiqueManager.musique3.play();
 		MapManager.init();
-		renderingManager.init();
+		// renderingManager.init();
 		playmusique1 = playmusique2 = false;
 		requestAnimationFrame(loadAssets);
 	}
@@ -94,5 +114,5 @@
 
 
 
-	addEventListener("load", init);
+	addEventListener("load", initMenu);
 })();

@@ -12,6 +12,7 @@ var renderingManager = function ()
 	var t = "0";
 	var drawing = false;
 	var drawX, drawY;
+	// var menu, aide;
 	
 	function init ()
 	{
@@ -40,10 +41,22 @@ var renderingManager = function ()
 		foreground2.src = "assets/Stade_02.png";
 		foreground3 = new Image();
 		foreground3.src = "assets/Stade_03.png";
+		menu = new Image();
+		menu.src = "assets/menu2.png";
+		aide = new Image();
+		aide.src = "assets/aide.png";
 
   		assetsRendered = [];
   		staticObjects = [];
   		exclamP = AssetsManager.getImage('exclam');
+	}
+	function drawMenu (){
+		console.log(menu.complete);
+		if (!menu.complete)
+		{
+			return;
+		}
+		cameraCtx.drawImage(menu, 0,0,1080,720);
 	}
 
 	function drawMap (map, doorname, floorname, wallname)
@@ -222,6 +235,7 @@ var renderingManager = function ()
 		removeFromDebug: removeFromDebug,
 		removeFromDynamicObjects: removeFromDynamicObjects,
 		follow: follow,
+		drawMenu : drawMenu,
 		drawExclamPoint : drawExclamPoint,
 		set drawing(x){
 			drawing = x;
