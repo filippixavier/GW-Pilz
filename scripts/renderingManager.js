@@ -107,7 +107,8 @@ var renderingManager = function ()
 		{
 			textCtx.clearRect(0,0,textCanvas.width,textCanvas.height);
 			t = temp;
-			textCtx.fillStyle = "#FFFFFF";
+			textCtx.fillStyle = "#FF0000";
+			textCtx.font = "50px Verdana";
 			textCtx.fillText(t,200,100);
 		}
 
