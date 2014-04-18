@@ -8,13 +8,13 @@ var Obstacle = function(config){
 	{
 		if (this.animData.duration == undefined)
 		{
-			this.img = AssetsManager.getImage(config.type);
+			//this.img = AssetsManager.getImage(config.type);
 		}
 	}
-	else
-		this.img = AssetsManager.getImage(config.type);
-	this.width = this.img.width;
-	this.height = this.img.height;
+	this.img = AssetsManager.getImage(config.type);
+	this.width = this.animData.spriteWidth;
+	this.height = this.animData.spriteHeight;
+	
 	// if (config.facing == 1)
 	// {
 	// 	this.currentFrame = 0;

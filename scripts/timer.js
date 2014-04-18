@@ -55,6 +55,7 @@ var timer = function()
 		}
 		if(state != previous)
 		{
+			console.log(state);
 			events.emit("onStateChage", state);
 		}
 	}

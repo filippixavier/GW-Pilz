@@ -7,8 +7,13 @@
 	var title;
 	var enemies = {n1:[], n2:[], n3:[]};
 
+	var events;
+
 	function init () {
 		mapList = maps;
+		events = new EventListener();
+		events.create('onNewEnemies');
+		events.create('onRemoveEnemies');
 	}
 
 	function createMap(mapName)
@@ -72,16 +77,15 @@
 
 	function createEnemiesOnMapChange()
 	{
-		enemies.n1 = [];
-		enemies.n2 = [];
-		enemies.n3 = [];
+		deleteEnemies("n3");
+		deleteEnemies("n2");
+		deleteEnemies("n1");
 		var enemiesList, width, enemy, state, n;
-		console.log(timer.state);
 		state = timer.state;
 		while(state > 0)
 		{
 			n='n'+state;
-			//createEnemies(n);
+			createEnemies(n);
 			state--;
 		}
 
@@ -94,9 +98,13 @@
 			return;
 		width = (n === "n3")? 128:64;
 		for (var i = enemiesList.length - 1; i >= 0; i--) {
-			enemy = new Character(enemiesList[i].x*width, enemiesList[i].y*width,0.2,width,64,enemiesList[i].type);
+			enemy = new Character(enemiesList[i].x*100, enemiesList[i].y*100,0.2,width,64,enemiesList[i].type);
+			enemy.setIA();
 			enemies[n].push(enemy);
 		};
+
+		events.emit("onNewEnemies", enemies[n], n);
+		console.log(enemies[n].length);
 	}
 
 	function deleteEnemies (n) 
@@ -105,6 +113,7 @@
 			enemies[n][i].delete();
 		}
 		enemies[n] = [];
+		events.emit("onRemoveEnemies", n);
 	}
 
 	function switchMap(door,objet)
@@ -330,13 +339,22 @@
 		var n = "n"+state;
 		if(enemies[n] != undefined && enemies[n].length === 0)
 		{
-			//createEnemies(n);
+			createEnemies(n);
 		}
 		n = "n"+(state+1);
 		if(enemies[n] != undefined)
 		{
 			deleteEnemies(n);
 		}
+	}
+
+	function onNewEnemies (clb)
+	{
+		events.subscribe("onNewEnemies", clb);
+	}
+
+	function onRemoveEnemies (clb) {
+		events.subscribe("onRemoveEnemies", clb);
 	}
 
 	return {
@@ -349,6 +367,8 @@
 		get actualMap() {
 			return map;
 		},
-		onStateChange: onStateChange
+		onStateChange: onStateChange,
+		onRemoveEnemies: onRemoveEnemies,
+		onNewEnemies: onNewEnemies
 	}
 }();

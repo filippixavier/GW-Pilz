@@ -27,7 +27,16 @@ function Character(x,y,speed, height, width, type, orientation)
 			break;
 	}
 
-	this.anim = new Animation(this, type, sens);
+	this.anim;
+
+	try{
+		this.anim = new Animation(this, type, sens);
+	}
+	catch(e)
+	{
+		this.anim = {debug:true, x:this.x, y:this.y, color:"#fff", width: this.width, height: this.height};
+		renderingManager.addToDebug(this.anim);
+	}
 	
 	this.event = new EventListener();
 	this.event.create("move");
@@ -66,14 +75,11 @@ Character.prototype.move = function(direction, dt) {
 			this.orientation = 2;
 		}
 	}
+
 	if(this.orientation !== previousOrientation)
 	{
 		previousOrientation = this.orientation;
 		//this.anim.changeOrientation(this.orientation);
-	}
-	else
-	{
-		//this.anim.update(dt);
 	}
 
 	if(direction.x === 0 && direction.y === 0)
@@ -121,11 +127,15 @@ Character.prototype.render = function(dt) {
 	this.anim.x = this.x;
 	this.anim.y = this.y;
 
-	this.anim.update(dt);
+	if(this.anim.debug === undefined)
+		this.anim.update(dt);
 };
 
 Character.prototype.delete = function() {
-	this.anim.delete();
+	if(this.anim.debug === undefined)
+		this.anim.delete();
+	else
+		renderingManager.removeFromDebug(this.anim);
 };
 
 Character.prototype.setIa = function(tradius) {

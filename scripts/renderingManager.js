@@ -3,18 +3,20 @@ var renderingManager = function ()
 	window.requestAnimationFrame = window.requestAnimationFrame || window.mozRequestAnimationFrame ||
                       window.webkitRequestAnimationFrame || window.msRequestAnimationFrame;
      
-	var cameraCanvas , cameraCtx, mapCanvas, mapCtx,dynamicCanvas, dynamicCtx, cameraX = 0 , cameraY = 0;
+	var cameraCanvas , cameraCtx, mapCanvas, mapCtx, dynamicCanvas, dynamicCtx, textCanvas, textCtx, cameraX = 0 , cameraY = 0;
 
 	var floor, wall, door;
 
-	var assetsRendered = [], staticObjects = [];
+	var assetsRendered = [], staticObjects = [], debug = [];
+
+	var t = "0";
 	
 	function init ()
 	{
 		cameraCanvas = document.getElementById("canvas");
 		cameraCanvas.height = 720;
 		cameraCanvas.width = 1080;
-		cameraCtx = document.getElementById("canvas").getContext("2d");
+		cameraCtx = cameraCanvas.getContext("2d");
 
 		mapCanvas = document.createElement("canvas");
 		mapCanvas.width = 2000;
@@ -25,6 +27,11 @@ var renderingManager = function ()
 		dynamicCanvas.width = 2000;
 		dynamicCanvas.height = 2000;
   		dynamicCtx = dynamicCanvas.getContext("2d");
+
+  		textCanvas = document.createElement("canvas");
+  		textCanvas.height = 720;
+  		textCanvas.width = 1080;
+  		textCtx = textCanvas.getContext('2d');
 
   		assetsRendered = [];
   		staticObjects = [];
@@ -64,12 +71,13 @@ var renderingManager = function ()
 		}
 
 		for (var i = staticObjects.length - 1; i >= 0; i--) {
-			mapCtx.drawImage(staticObjects[i].img, staticObjects[i].x*staticObjects[i].width, staticObjects[i].y*staticObjects[i].height, staticObjects[i].width, staticObjects[i].height);
+			mapCtx.drawImage(staticObjects[i].img, staticObjects[i].posiX*staticObjects[i].width, staticObjects[i].posiY*staticObjects[i].height, staticObjects[i].width, staticObjects[i].height,staticObjects[i].x*staticObjects[i].width, staticObjects[i].y*staticObjects[i].height, staticObjects[i].width, staticObjects[i].height);
 		};
 	}
 
 	function render (game)
 	{
+		var temp;
 		cameraCtx.fillStyle = "#000000";
 		cameraCtx.fillRect ( 0 , 0 , 1080 , 720 );
 		cameraCtx.fillStyle = "#f00";
@@ -88,8 +96,24 @@ var renderingManager = function ()
 			}
 		}
 
+		for(var i = 0; debug[i]; i++)
+		{
+			dynamicCtx.fillStyle = debug[i].color;
+			dynamicCtx.fillRect(debug[i].x, debug[i].y, debug[i].width, debug[i].height);
+		}
+
+		temp = timer.time;
+		if(temp !== t)
+		{
+			textCtx.clearRect(0,0,textCanvas.width,textCanvas.height);
+			t = temp;
+			textCtx.fillStyle = "#FFFFFF";
+			textCtx.fillText(t,200,100);
+		}
+
 		cameraCtx.drawImage(mapCanvas, cameraX, cameraY, cameraCanvas.width, cameraCanvas.height, 0, 0, cameraCanvas.width, cameraCanvas.height);
 		cameraCtx.drawImage(dynamicCanvas, cameraX, cameraY, cameraCanvas.width, cameraCanvas.height, 0, 0, cameraCanvas.width, cameraCanvas.height);
+		cameraCtx.drawImage(textCanvas, 0,0,textCanvas.width,textCanvas.height);
 		//cameraCtx.fillRect ( game.perso.x , game.perso.y , game.perso.w , game.perso.h );
 	}
 
@@ -98,12 +122,14 @@ var renderingManager = function ()
 		staticObjects = [];
 	}
 
-	function addToStaticObjects (img, x, y, width, height) 
+	function addToStaticObjects (img, x, y, width, height, posiX, posiY) 
 	{
 		var obj = {
 			img: img,
 			x: x,
 			y: y,
+			posiX: posiX || 0,
+			posiY: posiY || 0,
 			width: width,
 			height: height
 		}
@@ -120,8 +146,17 @@ var renderingManager = function ()
 
 	function removeFromDynamicObjects (assetData) 
 	{
-		var index = assetData.indexOf(assetData);
-		assetData.splice(index, 1);
+		var index = assetsRendered.indexOf(assetData);
+		assetsRendered.splice(index, 1);
+	}
+
+	function addToDebug (debugObject) {
+		debug.push(debugObject);
+	}
+
+	function removeFromDebug (debugObject) {
+		var index = debug.indexOf(debugObject);
+		debug.splice(index, 1);
 	}
 
 	function follow (character) {
@@ -132,7 +167,7 @@ var renderingManager = function ()
 
 	function moveCamera (x, y) {
 		cameraX = x - (cameraCanvas.width/2);
-		cameraY = y - (cameraCanvas.height/2);;
+		cameraY = y - (cameraCanvas.height/2);
 	}
 
 	return {
@@ -142,6 +177,8 @@ var renderingManager = function ()
 		clearStaticObjects: clearStaticObjects,
 		addToStaticObjects: addToStaticObjects,
 		addToDynamicObjects: addToDynamicObjects,
+		addToDebug: addToDebug,
+		removeFromDebug: removeFromDebug,
 		removeFromDynamicObjects: removeFromDynamicObjects,
 		follow: follow,
 		get cameraX(){

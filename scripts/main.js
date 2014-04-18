@@ -3,7 +3,7 @@
 	window.requestAnimationFrame = window.requestAnimationFrame || window.mozRequestAnimationFrame ||
                               window.webkitRequestAnimationFrame || window.msRequestAnimationFrame;
 
-    var player, t1, t2, dt,playmusique1,playmusique2;
+    var player, t1, t2, dt,playmusique1,playmusique2, enemies = {n1:[], n2:[], n3:[]};
 
 		
 	function init () {
@@ -16,14 +16,14 @@
 		renderingManager.init();
 		playmusique1 = playmusique2 = false;
 		requestAnimationFrame(loadAssets);
-
-
 	}
 
 	function loadAssets()
 	{
 		if(AssetsManager.checkDone())
 		{
+			MapManager.onNewEnemies(addEnemies);
+			MapManager.onRemoveEnemies(clearEnemies);
 			MapManager.loadMap("bloc_operatoire",2,2);
 			timer.subscribe(MapManager.onStateChange);
 			t1 = Date.now();
@@ -72,6 +72,16 @@
 
 		requestAnimationFrame(run);
 	}
+
+	function addEnemies (enemy,n) {
+		enemies[n] = enemy;
+	}
+
+	function clearEnemies (n) {
+		enemies[n] = [];
+	}
+
+
 
 	addEventListener("load", init);
 })();
