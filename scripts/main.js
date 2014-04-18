@@ -25,7 +25,9 @@
 			MapManager.onNewEnemies(addEnemies);
 			MapManager.onRemoveEnemies(clearEnemies);
 			MapManager.loadMap("bloc_operatoire",2,2);
+			MapManager.onKill(killEnemy);
 			timer.subscribe(MapManager.onStateChange);
+
 			t1 = Date.now();
 			player = new Character(0,0,0.25, 64, 64, "mainchar");
 			renderingManager.follow(player);
@@ -87,11 +89,19 @@
 		{
 			for (var i = enemies["n"+n].length - 1; i >= 0; i--) {
 				enemies["n"+n][i].protectTerritory(player, dt);
-				enemies["n"+n][i].render(dt);
+				if(enemies["n"+n][i] !== undefined)
+					enemies["n"+n][i].render(dt);
 			};
 		}
 	}
 
+	function killEnemy (n, enemy)
+	{
+		var index = enemies[n].indexOf(enemy);
+		enemies[n].splice(index, 1);
+		console.log("hello");
+		timer.changeTime(-10000); 
+	}
 
 
 	addEventListener("load", init);
