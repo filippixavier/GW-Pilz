@@ -6,19 +6,20 @@
     var player, t1, t2, dt,playmusique1,playmusique2, enemies = {n1:[], n2:[], n3:[]}, state = "menu";
 
 	function initMenu () {
-		AssetsManager.init()
 		// timer.start();
 		// MusiqueManager.musique1.play();
 		//MusiqueManager.musique2.play();
 		//MusiqueManager.musique3.play();
 		// MapManager.init();
-		renderingManager.init();
-		renderingManager.drawMenu();
+		if(renderingManager.menuImageStatus)
+		{
+			renderingManager.drawMenu();
+		}
 		// playmusique1 = playmusique2 = false;
 		// requestAnimationFrame(loadAssets);
 		if (state == "play")
 		{
-			init();
+			run();
 		}
 		else
 		{
@@ -27,16 +28,18 @@
 		// init();
 	}
 	function init () {
-		// AssetsManager.init()
+		AssetsManager.init()
 		timer.start();
-		MusiqueManager.musique1.play();
+		//MusiqueManager.musique1.play();
 		//MusiqueManager.musique2.play();
 		//MusiqueManager.musique3.play();
 		MapManager.init();
-		// renderingManager.init();
+		renderingManager.init();
 		playmusique1 = playmusique2 = false;
 		requestAnimationFrame(loadAssets);
 		game_State = "menu";
+
+		initMenu();
 	}
 
 	function loadAssets()
@@ -127,10 +130,16 @@
 	{
 		var index = enemies[n].indexOf(enemy);
 		enemies[n].splice(index, 1);
-		console.log("hello");
 		timer.changeTime(-10000); 
 	}
 
 
-	addEventListener("load", initMenu);
+	addEventListener("load", init);
+	addEventListener("keydown", function(e)
+	{
+		if(e.keyCode == 32 && state == "menu")
+		{
+			state = "play";
+		}
+	});
 })();

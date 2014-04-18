@@ -13,7 +13,8 @@ var renderingManager = function ()
 	var drawing = false;
 	var drawX, drawY;
 	// var menu, aide;
-	
+	var menuImageStatus = false;
+
 	function init ()
 	{
 		cameraCanvas = document.getElementById("canvas");
@@ -41,8 +42,12 @@ var renderingManager = function ()
 		foreground2.src = "assets/Stade_02.png";
 		foreground3 = new Image();
 		foreground3.src = "assets/Stade_03.png";
+		
 		menu = new Image();
 		menu.src = "assets/menu2.png";
+		menu.onload = function(){
+			menuImageStatus = true;
+		}
 		aide = new Image();
 		aide.src = "assets/aide.png";
 
@@ -51,7 +56,6 @@ var renderingManager = function ()
   		exclamP = AssetsManager.getImage('exclam');
 	}
 	function drawMenu (){
-		console.log(menu.complete);
 		if (!menu.complete)
 		{
 			return;
@@ -255,6 +259,10 @@ var renderingManager = function ()
 		},
 		set cameraY(y){
 			cameraY = y;
+		},
+		get menuImageStatus()
+		{
+			return menuImageStatus;
 		}
 	};
 }();
