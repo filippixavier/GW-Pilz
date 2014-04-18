@@ -183,7 +183,21 @@
 
 					if (action == true)
 					{
-						switchMap(mapList[title].doors[i],objet);
+						if (mapList[title].doors[i].lock == null)
+						{
+							switchMap(mapList[title].doors[i],objet);
+						}
+						else
+						{
+							for (var j in objet.keys)
+							{
+								console.log(mapList[title].doors[i].lock);
+								if (mapList[title].doors[i].lock == objet.keys[j].substring(objet.keys[j].length-1,objet.keys[j].length))
+								{
+									switchMap(mapList[title].doors[i],objet);
+								}
+							}
+						}
 					}
 				}
 			// }
