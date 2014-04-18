@@ -14,6 +14,7 @@
 		events = new EventListener();
 		events.create('onNewEnemies');
 		events.create('onRemoveEnemies');
+		events.create('onKillEnemy');
 	}
 
 	function createMap(mapName)
@@ -100,11 +101,26 @@
 		for (var i = enemiesList.length - 1; i >= 0; i--) {
 			enemy = new Character(enemiesList[i].x*100, enemiesList[i].y*100,0.2,width,width,enemiesList[i].type);
 			enemy.setIA();
+			enemy.event.subscribe("die", findEnemy)
 			enemies[n].push(enemy);
 		};
 
 		events.emit("onNewEnemies", enemies[n], n);
 		console.log(enemies[n].length);
+	}
+
+	function findEnemy(enemy)
+	{
+		var index;
+		for(var i = 1; i < 4; i++)
+		{
+			index = enemies["n"+i].indexOf(enemy);
+			if(index != -1)
+			{
+				killEnemy("n"+i, enemy);
+				break;
+			}
+		}
 	}
 
 	function deleteEnemies (n) 
@@ -393,6 +409,18 @@
 		events.subscribe("onRemoveEnemies", clb);
 	}
 
+	function killEnemy (n, enemy) {
+		var index = enemies[n].indexOf(enemy);
+		enemies[n][index].delete();
+		enemies[n].splice(index, 1);
+		events.emit("onKillEnemy", n, enemy);
+	}
+
+	function onKill(clb)
+	{
+		events.subscribe("onKillEnemy", clb);
+	}
+
 	return {
 		init: init,
 		loadMap : loadMap,
@@ -405,6 +433,7 @@
 		},
 		onStateChange: onStateChange,
 		onRemoveEnemies: onRemoveEnemies,
-		onNewEnemies: onNewEnemies
+		onNewEnemies: onNewEnemies,
+		onKill: onKill
 	}
 }();
