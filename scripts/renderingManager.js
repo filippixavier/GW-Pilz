@@ -1,4 +1,4 @@
-var renderingManager = function ()
+var renderingManager = function (game_State)
 {
 	window.requestAnimationFrame = window.requestAnimationFrame || window.mozRequestAnimationFrame ||
                       window.webkitRequestAnimationFrame || window.msRequestAnimationFrame;
@@ -10,6 +10,7 @@ var renderingManager = function ()
 	var assetsRendered = [], staticObjects = [], debug = [];
 
 	var t = "0";
+
 	
 	function init ()
 	{
@@ -38,6 +39,12 @@ var renderingManager = function ()
 		foreground2.src = "assets/Stade_02.png";
 		foreground3 = new Image();
 		foreground3.src = "assets/Stade_03.png";
+		menu = new Image();
+		menu.src = "assets/menu2.png";
+	if(game_State == "menu")
+	{
+		menuRender();
+	}
 
   		assetsRendered = [];
   		staticObjects = [];
@@ -190,6 +197,11 @@ var renderingManager = function ()
 	function moveCamera (x, y) {
 		cameraX = x - (cameraCanvas.width/2);
 		cameraY = y - (cameraCanvas.height/2);
+	}
+
+	function menuRender () 
+	{
+		cameraCtx.drawImage(menu, 0,0);
 	}
 
 	return {

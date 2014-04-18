@@ -3,7 +3,7 @@
 	window.requestAnimationFrame = window.requestAnimationFrame || window.mozRequestAnimationFrame ||
                               window.webkitRequestAnimationFrame || window.msRequestAnimationFrame;
 
-    var player, t1, t2, dt,playmusique1,playmusique2, enemies = {n1:[], n2:[], n3:[]};
+    var player, t1, t2, dt,playmusique1,playmusique2, game_State, enemies = {n1:[], n2:[], n3:[]};
 
 		
 	function init () {
@@ -16,6 +16,7 @@
 		renderingManager.init();
 		playmusique1 = playmusique2 = false;
 		requestAnimationFrame(loadAssets);
+		game_State = "menu";
 	}
 
 	function loadAssets()
@@ -39,6 +40,9 @@
 	}
 
 	function run () {
+		//if(game_State == "play")
+		//{
+
 		t2 = Date.now();
 		dt = t2 - t1;
 		t1 = t2;
@@ -46,8 +50,12 @@
 		player.move(direction, dt);
 		player.render(dt);
 		updateEnemies();
-		renderingManager.render();
+		
 		timer.update(dt);
+		//}
+		renderingManager.render(game_State);
+
+
 		if(timer.state == 2 && !playmusique1)
 		{
 			MusiqueManager.musique3.stop();
