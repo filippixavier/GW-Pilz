@@ -86,7 +86,7 @@ Character.prototype.move = function(direction, dt) {
 	{
 		this.anim.stop();
 	}
-	else if(this.anim.pause)
+	else
 	{
 		var sens;
 		switch(this.orientation)

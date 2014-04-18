@@ -98,7 +98,7 @@
 			return;
 		width = (n === "n3")? 128:64;
 		for (var i = enemiesList.length - 1; i >= 0; i--) {
-			enemy = new Character(enemiesList[i].x*100, enemiesList[i].y*100,0.2,width,64,enemiesList[i].type);
+			enemy = new Character(enemiesList[i].x*100, enemiesList[i].y*100,0.2,width,width,enemiesList[i].type);
 			enemy.setIA();
 			enemies[n].push(enemy);
 		};
@@ -218,42 +218,68 @@
 
 	function collideObstacles(objet)
 	{
-		for ( var i in obstacles[title])
+		var insideX=0, insideY=0,posiX, posiY, obs = obstacles[title];
+		for ( var i in obs)
 		{
-			if (objet.x + objet.width > (obstacles[title][i].x*100) && objet.x < (obstacles[title][i].x*100)+100 && objet.y + objet.height > (obstacles[title][i].y*100) && objet.y < (obstacles[title][i].y*100)+100)
+			posiX = obs[i].x*100;
+			posiY = obs[i].y*100;
+			if (objet.x + objet.width > posiX 
+				&& objet.x < posiX+100 
+				&& objet.y + objet.height > posiY 
+				&& objet.y < posiY+100)
 			{
-				if (objet.orientation == 2 )
+				// if (objet.orientation == 2 )
+				// {
+				// 	objet.y = posiY - objet.height;
+				// 	if(direction.x == 1)
+				// 		objet.x ++;
+				// 	else if(direction.x == -1)
+				// 		objet.x --;
+				// }
+				// else if (objet.orientation == 1 )
+				// {
+				// 	objet.x = posiX - objet.width;
+				// 	if(direction.y == 1)
+				// 		objet.y ++;
+				// 	else if(direction.y == -1)
+				// 		objet.y --;
+				// }
+				// else if (objet.orientation == 0 )
+				// {
+				// 	objet.y = posiY +100;
+				// 	if(direction.x == 1)
+				// 		objet.x ++;
+				// 	else if(direction.x == -1)
+				// 		objet.x --;
+				// }
+				// else if (objet.orientation ==  3)
+				// {
+				// 	objet.x = posiX +100;
+				// 	if(direction.y == 1)
+				// 		objet.y ++;
+				// 	else if(direction.y == -1)
+				// 		objet.y --;
+				// }
+				insideX = posiX - objet.x;
+				insideY = posiY - objet.y;
+
+				if(insideX > 0)
 				{
-					objet.y = (obstacles[title][i].y*100) - objet.height;
-					if(direction.x == 1)
-						objet.x ++;
-					else if(direction.x == -1)
-						objet.x --;
+					objet.x -= (objet.width - insideX);
 				}
-				else if (objet.orientation == 1 )
+				else
 				{
-					objet.x = (obstacles[title][i].x*100) - objet.width;
-					if(direction.y == 1)
-						objet.y ++;
-					else if(direction.y == -1)
-						objet.y --;
+					objet.x += (100 - insideX);
 				}
-				else if (objet.orientation == 0 )
+				if(insideY > 0)
 				{
-					objet.y = (obstacles[title][i].y*100) +100;
-					if(direction.x == 1)
-						objet.x ++;
-					else if(direction.x == -1)
-						objet.x --;
+					objet.y -= (objet.height - insideY);
 				}
-				else if (objet.orientation ==  3)
+				else
 				{
-					objet.x = (obstacles[title][i].x*100) +100;
-					if(direction.y == 1)
-						objet.y ++;
-					else if(direction.y == -1)
-						objet.y --;
+					objet.y += (100 - insideY);
 				}
+
 			}
 		}
 	}
