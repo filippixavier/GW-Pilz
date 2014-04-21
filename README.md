@@ -15,3 +15,10 @@ Graphistes:
   Alix Letrividic
   Florianne Vallat
   Camille Viaud
+  
+Musiques: 
+  Jérémy Renaud
+
+Contrôles: 
+  ZQSD: déplacements
+  Espace: actions
